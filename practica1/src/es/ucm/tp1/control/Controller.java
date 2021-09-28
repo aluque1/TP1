@@ -44,8 +44,8 @@ public class Controller {
 		line = scanner.nextLine();
 		words = line.toLowerCase().trim().split("\\s+");
 		
-		switch(words[0]) {
-		case "h" || "help":
+		switch(words[0].charAt(0)) {
+		case 'h':
 			
 		}
 		
