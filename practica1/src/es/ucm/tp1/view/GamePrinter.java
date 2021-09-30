@@ -7,9 +7,9 @@ public class GamePrinter {
 
 	private static final String SPACE = " ";
 
-	private static final String ROAD_BORDER_PATTERN = "â•�";
+	private static final String ROAD_BORDER_PATTERN = "═";
 
-	private static final String LANE_DELIMITER_PATTERN = "â”€";
+	private static final String LANE_DELIMITER_PATTERN = "─";
 
 	private static final int CELL_SIZE = 7;
 
@@ -43,6 +43,9 @@ public class GamePrinter {
 		String lanesSeparator = SPACE + StringUtils.repeat(laneDelimiter + SPACE, numCols - 1) + laneDelimiter + SPACE;
 
 		this.indentedLlanesSeparator = String.format("%n%s%s%n", margin, lanesSeparator);
+		
+		// Added, might change in the future
+		this.board = new String[numRows][numCols];
 
 	}
 
@@ -51,9 +54,7 @@ public class GamePrinter {
 			for(int j = 0; j < numCols; j++) {
 				board[i][j] = game.positionToString(i, j);
 			}
-		}
-			
-				
+		}	
 	}
 
 	@Override

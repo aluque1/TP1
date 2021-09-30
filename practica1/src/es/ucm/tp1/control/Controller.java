@@ -37,12 +37,14 @@ public class Controller {
 	}
 
 	public void printGame() {
-		System.out.println(game);
+		System.out.println(game.gameToString());
 	}
 
 	public void run() {
 		String line;
 		String[] words;
+		
+		printGame();
 		
 		while (!exit) {
 			// We use this to parse the command so it's all in the same format and then we divide the line entered in the console to and array of words

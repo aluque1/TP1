@@ -5,7 +5,7 @@ import es.ucm.tp1.view.GamePrinter;
 
 public class Game {
 	
-	// Atriutes ----------------------------------------------------------
+	// Attributes --------------------------------------------------------
 	Long seed;
 	
 	// Enum --------------------------------------------------------------
@@ -18,6 +18,7 @@ public class Game {
 	public Game(Long seed, Level level) {
 		this.seed = seed;
 		this.level = level;
+		printer1 = new GamePrinter(this, level.getNumOfCols(), level.getNumOfRows());
 	}
 
 	public void toggleTest() {
@@ -25,14 +26,18 @@ public class Game {
 	}
 
 	public Object getGameStatus() {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO We have to add the information of the game
+		return "The info we still have to add";
 	}
 
 	// Game encoding methods --------------------------
 	public String positionToString(int i, int j) {
-		// TODO encode the game when
-		return null;
+		return " ";
 	}
+	
+	public String gameToString() {
+		return printer1.toString();
+	}
+	
 
 }

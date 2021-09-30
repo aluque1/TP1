@@ -22,7 +22,14 @@ public enum Level {
 		this.coinFrequency = coinFrequency;
 	}
 
-	// TODO fill your code
+	public int getNumOfCols() {
+		return this.length;
+	}
+	
+	public int getNumOfRows() {
+		return this.width;
+		
+	}
 
 	public static Level valueOfIgnoreCase(String inputString) {
 		for (Level level : Level.values()) {
