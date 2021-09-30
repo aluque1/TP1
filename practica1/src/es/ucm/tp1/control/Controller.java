@@ -37,7 +37,7 @@ public class Controller {
 	}
 
 	public void printGame() {
-		System.out.println(game.gameToString());
+		System.out.println(game.ToString());
 	}
 
 	public void run() {

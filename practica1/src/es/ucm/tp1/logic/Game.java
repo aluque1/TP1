@@ -35,7 +35,7 @@ public class Game {
 		return " ";
 	}
 	
-	public String gameToString() {
+	public String ToString() {
 		return printer1.toString();
 	}
 	
