@@ -22,11 +22,16 @@ public class Game {
 
 	public void toggleTest() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public Object getGameStatus() {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// Game encoding methods --------------------------
+	public String positionToString(int i, int j) {
+		// TODO encode the game when
 		return null;
 	}
 

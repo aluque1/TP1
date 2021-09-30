@@ -7,9 +7,9 @@ public class GamePrinter {
 
 	private static final String SPACE = " ";
 
-	private static final String ROAD_BORDER_PATTERN = "═";
+	private static final String ROAD_BORDER_PATTERN = "â•�";
 
-	private static final String LANE_DELIMITER_PATTERN = "─";
+	private static final String LANE_DELIMITER_PATTERN = "â”€";
 
 	private static final int CELL_SIZE = 7;
 
@@ -47,7 +47,13 @@ public class GamePrinter {
 	}
 
 	private void encodeGame(Game game) {
-		// TODO fill your code
+		for(int i = 0; i < numRows; i++) {
+			for(int j = 0; j < numCols; j++) {
+				board[i][j] = game.positionToString(i, j);
+			}
+		}
+			
+				
 	}
 
 	@Override
