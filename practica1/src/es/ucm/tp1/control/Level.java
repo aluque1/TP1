@@ -22,15 +22,6 @@ public enum Level {
 		this.coinFrequency = coinFrequency;
 	}
 
-	public int getNumOfCols() {
-		return this.length;
-	}
-	
-	public int getNumOfRows() {
-		return this.width;
-		
-	}
-
 	public static Level valueOfIgnoreCase(String inputString) {
 		for (Level level : Level.values()) {
 			if (level.name().equalsIgnoreCase(inputString)) {
@@ -51,5 +42,27 @@ public enum Level {
 			levelCount++;
 		}
 		return buffer.toString();
+	}
+
+// Getters for the game to be able to determine if we are inside the bounds, we are able to generate a coin, etc.
+	public int getNumOfCols() {
+		return this.length;
+	}
+	
+	public int getNumOfRows() {
+		return this.width;
+		
+	}
+
+	public int getVisibility() {
+		return visibility;
+	}
+
+	public double getCoinFrequency() {
+		return coinFrequency;
+	}
+
+	public double getObstacleFrequency() {
+		return obstacleFrequency;
 	}
 }
