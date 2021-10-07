@@ -8,35 +8,62 @@ import es.ucm.tp1.view.GamePrinter;
 public class Game {
 	
 	// Attributes --------------------------------------------------------
-	Long seed;
-	Random rand;
+	private Long seed;
+	private Random rand;
+	private int maxItems;
 	
 	// Enum --------------------------------------------------------------
-	Level level;
+	private Level level;
 	
 	// Classes -----------------------------------------------------------
-	GamePrinter printer;
-	CoinList cl;
-	ObstacleList ol;
+	private GamePrinter printer;
+	private CoinList cl;
+	private ObstacleList ol;
 	
 	// Game initialising methods -----------------------------------------
 	public Game(Long seed, Level level) {
 		this.seed = seed;
 		this.level = level;
+		this.maxItems = level.getLength() - (level.getVisibility()/2);
 		printer = new GamePrinter(this, level.getNumOfCols(), level.getNumOfRows());
+		init();
 	}
 
 	// This method will be called when we call the reset command from Controller
-	public void init(Long seed) {
-		rand = new Random(seed);
+	public void init() {
+		rand = new Random(this.seed);
+		ol = new ObstacleList(maxItems);
+		obstaclePlacer();
+		cl = new CoinList(maxItems);
+		coinPlacer();
 	}
 	
+	//From visibility/2 to the length, we look to check if we can place a coin
+	// We place a coin if random generated is greater than the frequency of the placement for said level
+	// and there isn't an obstacle in this position.
 	private void coinPlacer() {
-		// TODO We have to add all of the coins to the CoinList
+		int initialPoint = level.getVisibility()/2;
+		for(int i = initialPoint; i < level.getLength(); i++) {
+			if(level.getCoinFrequency() > rand.nextDouble()) {
+				int auxRow = rand.nextInt(level.getWidth());
+				if(!isPosObstacle(auxRow, i)) {
+					Coin coin = new Coin(auxRow, i, this);
+					cl.add(coin);
+				}
+			}
+		}
 	}
 	
+	//From visibility/2 to the length, we look to check if we can place an obstacle
+	// We place an obstacle if random generated is greater than the frequency of the placement for said level
 	private void obstaclePlacer() {
-		// TODO We have to add all of the obstacles to the ObstacleList
+		int initialPoint = level.getVisibility()/2;
+		for(int i = initialPoint; i < level.getLength(); i++) {
+			if(level.getObstacleFrequency() < rand.nextDouble()) {
+				Obstacle obs = new Obstacle(rand.nextInt(level.getWidth()), i, this);
+				ol.add(obs);
+			}
+		}
 	}
 	
 	public void toggleTest() {
@@ -47,10 +74,27 @@ public class Game {
 		// TODO We have to add the information of the game
 		return "The info we still have to add";
 	}
-
+	
+	public boolean isPosObstacle(int row, int col) {
+		return ol.isPosObstacle(row, col);
+	}
+	
+	public boolean isPosCoin(int row, int col) {
+		return cl.isPosCoin(row, col);
+	}
+	
+	public int visibility() {
+		return level.getVisibility();
+	}
+	
 	// Game encoding methods --------------------------
 	public String positionToString(int i, int j) {
-		return " ";
+		String cell = " ";
+		if(isPosObstacle(i, j))
+			cell = Obstacle.getString();
+		else if(isPosCoin(i, j))
+			cell = Coin.getString();
+		return cell;
 	}
 	
 	public String ToString() {

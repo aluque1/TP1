@@ -29,10 +29,11 @@ public class GamePrinter {
 
 	private String[][] board;
 	
+	// TODO cols goes where visibility
 	public GamePrinter(Game game, int cols, int rows) {
 		this.game = game;
 		this.numRows = rows;
-		this.numCols = cols;
+		this.numCols = game.visibility();
 
 		this.margin = StringUtils.repeat(SPACE, MARGIN_SIZE);
 

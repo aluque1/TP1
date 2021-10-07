@@ -65,4 +65,12 @@ public enum Level {
 	public double getObstacleFrequency() {
 		return obstacleFrequency;
 	}
+	
+	public int getLength() {
+		return length;
+	}
+	
+	public int getWidth() {
+		return width;
+	}
 }

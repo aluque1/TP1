@@ -95,8 +95,8 @@ public class Controller {
 			
 			// Resets the game with the same LEVEL and SEED parameters as before
 			case "reset": case "r" :
-				// TODO Reset the Game and start a new one with the same LEVEL and SEED 
-				passTurn = false; // Don't know if this is needed or not 
+				game.init(); 
+				passTurn = false;
 				break;
 			
 			// Enables test mode
