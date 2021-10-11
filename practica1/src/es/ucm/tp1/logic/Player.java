@@ -3,8 +3,8 @@ package es.ucm.tp1.logic;
 public class Player {
 
 	//Attributes -----------------------
-		private int posX;
-		private int posY;
+		private int col;
+		private int row;
 		private Game game;
 		private int numOfCoins;
 		private boolean alive;
@@ -14,9 +14,9 @@ public class Player {
 		private final String DEAD_SPRITE = "@";
 
 		// Constructor ---------------------
-		public Player(int posX, int posY, Game game) {
-			this.posX = posX;
-			this.posY = posY;
+		public Player(int row, int col, Game game) {
+			this.col = col;
+			this.row = row;
 			this.game = game;
 			this.numOfCoins = 0;
 			this.alive = true;
@@ -27,10 +27,15 @@ public class Player {
 			// TODO 
 		}
 		
+		public boolean isPosPlayer(int row, int col) {
+			return (row == this.row && col == this.col);
+		}
+		
 		public String toString() {
 			if(alive)
 				return ALIVE_SPRITE;
 			else
 				return DEAD_SPRITE;
 		}
+
 }

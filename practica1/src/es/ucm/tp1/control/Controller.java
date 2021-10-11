@@ -30,6 +30,7 @@ public class Controller {
 
 	private Game game;
 	private Scanner scanner;
+	private Level level;
 
 	public Controller(Game game, Scanner scanner) {
 		this.game = game;
@@ -62,10 +63,10 @@ public class Controller {
 				passTurn = false;
 				break;
 				
-			// Prints the gameobject info
+			// Prints the game object info
 			case "info" : case "i" :
 				
-				// TODO Print gameobject info
+				// TODO Print game object info
 				passTurn = false;
 				break;
 				
@@ -95,7 +96,7 @@ public class Controller {
 			
 			// Resets the game with the same LEVEL and SEED parameters as before
 			case "reset": case "r" :
-				game.init(); 
+				game.init(level); 
 				passTurn = false;
 				break;
 			

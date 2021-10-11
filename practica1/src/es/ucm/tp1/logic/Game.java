@@ -19,23 +19,25 @@ public class Game {
 	private GamePrinter printer;
 	private CoinList cl;
 	private ObstacleList ol;
+	private Player p;
 	
-	// Game initialising methods -----------------------------------------
+	// Game initializers methods -----------------------------------------
 	public Game(Long seed, Level level) {
 		this.seed = seed;
 		this.level = level;
 		this.maxItems = level.getLength() - (level.getVisibility()/2);
 		printer = new GamePrinter(this, level.getNumOfCols(), level.getNumOfRows());
-		init();
+		init(level);
 	}
 
 	// This method will be called when we call the reset command from Controller
-	public void init() {
+	public void init(Level level) {
 		rand = new Random(this.seed);
 		ol = new ObstacleList(maxItems);
 		obstaclePlacer();
 		cl = new CoinList(maxItems);
 		coinPlacer();
+		p = new Player(level.getNumOfRows()/2, 0, this);
 	}
 	
 	//From visibility/2 to the length, we look to check if we can place a coin
@@ -43,6 +45,7 @@ public class Game {
 	// and there isn't an obstacle in this position.
 	private void coinPlacer() {
 		int initialPoint = level.getVisibility()/2;
+		
 		for(int i = initialPoint; i < level.getLength(); i++) {
 			if(level.getCoinFrequency() > rand.nextDouble()) {
 				int auxRow = rand.nextInt(level.getWidth());
@@ -75,6 +78,10 @@ public class Game {
 		return "The info we still have to add";
 	}
 	
+	private boolean isPosPlayer(int row, int col) {
+		return p.isPosPlayer(row, col);
+	}
+	
 	public boolean isPosObstacle(int row, int col) {
 		return ol.isPosObstacle(row, col);
 	}
@@ -90,13 +97,15 @@ public class Game {
 	// Game encoding methods --------------------------
 	public String positionToString(int i, int j) {
 		String cell = " ";
-		if(isPosObstacle(i, j))
+		if (isPosPlayer(i, j))
+			cell = p.toString();
+		else if(isPosObstacle(i, j))
 			cell = Obstacle.getString();
 		else if(isPosCoin(i, j))
 			cell = Coin.getString();
 		return cell;
 	}
-	
+
 	public String ToString() {
 		return printer.toString();
 	}

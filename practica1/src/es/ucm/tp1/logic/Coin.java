@@ -6,7 +6,7 @@ public class Coin {
 	private int row;
 	private int col;
 	private Game game;
-	private static int numOfCoins = 0;
+	static int numOfCoins = 0;
 	
 	
 	//Constants ------------------------

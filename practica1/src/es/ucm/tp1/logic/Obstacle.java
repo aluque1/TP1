@@ -5,7 +5,7 @@ public class Obstacle {
 		private int row;
 		private int col;
 		private Game game;
-		private static int numOfObstacles = 0;
+		static int numOfObstacles = 0;
 		
 		
 		//Constants ------------------------
