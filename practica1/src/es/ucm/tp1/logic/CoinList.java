@@ -6,6 +6,7 @@ public class CoinList {
 	
 	public CoinList(int size) {
 		cl = new Coin[size];
+		Coin.numOfCoins = 0;
 	}
 
 	public void add(Coin coin) {
@@ -21,4 +22,16 @@ public class CoinList {
 		}
 		return isInPos;
 	}
+	
+	public void pickCoinInPos(int row, int col) {
+		for(int i = 0; i < Coin.numOfCoins; i++) {
+			if(cl[i].isInPosition(row, col))
+				for(int j = i; j < Coin.numOfCoins - 1; ++j) {
+					cl[j] = cl[j + 1];
+				}
+		}
+		Coin.numOfCoins--;
+	}
+	
+	
 }

@@ -7,25 +7,12 @@ import es.ucm.tp1.view.GamePrinter;
 
 /**
  * @author aluqu
- *	 TODO:: 
- *		-PLAYER:
- *			(I think the movement should return a boolean, to display a message that tell you why you couldn't move
- *			 ie. the car is at the top of the road and the player tries to move up, it should display a message telling
- *			 the player why that movement can't be performed)
- *			· moveUp() -- Just needs to be implemented 
- *			· moveDown() -- Just needs to be implemented 
- *			· moveForward() 
- *			· Obstacle Collision -- not to sure if we do this in the player, or in the game.
- *			· Coin Collision
- *		-CONTROLLER
- *			x Finish all of the commands, can only be done once all the player methods are done
- *				(Only the test is left to be done.)
+ * 
+ *	 TODO::
+ *	Preguntar la meta.
+ *	Si se eliminan las monedas cuando se pasan.
+ *	coinsCollected static o getterssetter?
  *	
- *		-GAMEPRINTER
- *			· Print the board properly, once the player moves, we need to make the road fall behind by one
- *		-GAME 
- *			· Implement the appropriate calling methods to be able to implement the commands and the player movement
- *			· Add the game info to print
  */
 
 
@@ -35,15 +22,20 @@ public class Game {
 	private Long seed;
 	private Random rand;
 	private int maxItems;
-	
-	// Enum --------------------------------------------------------------
-	private Level level;
-	
-	// Classes -----------------------------------------------------------
 	private GamePrinter printer;
 	private CoinList cl;
 	private ObstacleList ol;
 	private Player p;
+	private Level level;
+	
+	private boolean test = false;
+	private int cycles;
+	private int distance;
+	
+	private double ellapsedTime;
+	private double initialTime;
+	private double prettyTime;
+	
 	
 	// Game initializers methods -----------------------------------------
 	public Game(Long seed, Level level) {
@@ -51,18 +43,33 @@ public class Game {
 		this.level = level;
 		this.maxItems = level.getLength() - (level.getVisibility()/2);
 		printer = new GamePrinter(this, level.getNumOfCols(), level.getNumOfRows());
-		init(level);
+		init();
 	}
 
 	// This method will be called when we call the reset command from Controller
-	public void init(Level level) {
+	public void init() {
 		rand = new Random(this.seed);
+		cycles = 0;
+		distance = this.level.getLength();
+		ellapsedTime = 0;
 		ol = new ObstacleList(maxItems);
 		obstaclePlacer();
 		cl = new CoinList(maxItems);
 		coinPlacer();
-		p = new Player(level.getNumOfRows()/2, 0, this);
+		p = new Player(this.level.getNumOfRows()/2, 0, this);
 	}
+	
+	//From visibility/2 to the length, we look to check if we can place an obstacle
+		// We place an obstacle if random generated is greater than the frequency of the placement for said level
+		private void obstaclePlacer() {
+			int initialPoint = level.getVisibility()/2;
+			for(int i = initialPoint; i < level.getLength() - 1; i++) {
+				if(level.getObstacleFrequency() < rand.nextDouble()) {
+					Obstacle obs = new Obstacle(rand.nextInt(level.getWidth()), i, this);
+					ol.add(obs);
+				}
+			}
+		}
 	
 	//From visibility/2 to the length, we look to check if we can place a coin
 	// We place a coin if random generated is greater than the frequency of the placement for said level
@@ -70,7 +77,7 @@ public class Game {
 	private void coinPlacer() {
 		int initialPoint = level.getVisibility()/2;
 		
-		for(int i = initialPoint; i < level.getLength(); i++) {
+		for(int i = initialPoint; i < level.getLength() - 1; i++) {
 			if(level.getCoinFrequency() > rand.nextDouble()) {
 				int auxRow = rand.nextInt(level.getWidth());
 				if(!isPosObstacle(auxRow, i)) {
@@ -81,25 +88,21 @@ public class Game {
 		}
 	}
 	
-	//From visibility/2 to the length, we look to check if we can place an obstacle
-	// We place an obstacle if random generated is greater than the frequency of the placement for said level
-	private void obstaclePlacer() {
-		int initialPoint = level.getVisibility()/2;
-		for(int i = initialPoint; i < level.getLength(); i++) {
-			if(level.getObstacleFrequency() < rand.nextDouble()) {
-				Obstacle obs = new Obstacle(rand.nextInt(level.getWidth()), i, this);
-				ol.add(obs);
-			}
-		}
-	}
-	
 	public void toggleTest() {
-		// TODO Auto-generated method stub
+		test = true;
 	}
 
 	public Object getGameStatus() {
-		// TODO We have to add the information of the game
-		return "The info we still have to add";
+		StringBuilder str = new StringBuilder();
+		str.append("Distance: " + distance + '\n');
+		str.append("Coins: " + Player.coinsCollected + '\n');
+		str.append("Cycles: " + cycles + '\n');
+		str.append("Total obstacles: " + Obstacle.numOfObstacles + '\n');
+		str.append("Total coins: " + Coin.numOfCoins + '\n');
+		prettyTime = Math.round((ellapsedTime/1000) * 100.0) / 100.0;
+		if(!test)
+			str.append("Ellapsed Time: " + prettyTime + '\n');
+		return str.toString();
 	}
 	
 	private boolean isPosPlayer(int row, int col) {
@@ -118,14 +121,35 @@ public class Game {
 		return level.getVisibility();
 	}
 	
+	public boolean isWithinBounds(int row) {
+		return (row < (level.getWidth()) && row >= 0);
+	}
+	
+	
+	// Checks whether the player has collided with an obstacle or needs to pick up a coin
+	public boolean checkCollision() {
+		boolean collision = false;
+		for(int row = 0; row < level.getNumOfRows(); row++) {
+			if(isPosPlayer(row, cycles) && isPosObstacle(row, cycles)) {
+				p.collide();
+				collision = true;
+			}
+			else if(isPosPlayer(row, cycles) && isPosCoin(row, cycles)) {
+				p.pickUpCoin();
+				cl.pickCoinInPos(row, cycles);
+			}
+		}
+		return collision;
+	}
+	
 	// Game encoding methods --------------------------
 	public String positionToString(int i, int j) {
 		String cell = " ";
-		if (isPosPlayer(i, j))
+		if (isPosPlayer(i, (j + cycles)))
 			cell = p.toString();
-		else if(isPosObstacle(i, j))
+		else if(isPosObstacle(i, (j + cycles)))
 			cell = Obstacle.getString();
-		else if(isPosCoin(i, j))
+		else if(isPosCoin(i, (j + cycles)))
 			cell = Coin.getString();
 		return cell;
 	}
@@ -134,6 +158,14 @@ public class Game {
 		return printer.toString();
 	}
 
+	// Game state methods -------------------------------
+	public boolean isAtEnd() {
+		if(p.isAtEnd(level.getLength()))
+			return true;
+		else
+			return false;
+	}
+	
 	
 	// Game altering methods ----------------------------
 	
@@ -145,13 +177,37 @@ public class Game {
 		return p.moveDown();
 	}
 	
-	public void update() {
-		/**
-		 * TODO:: 
-		 *  In the update we make the player move forward, always. If the user command is UP or DOWN
-		 *  we also need to make the players position change accordingly. 
-		 */
+	public boolean update() {
+		cycles++;
+		if(cycles == 0) 
+			ellapsedTime = 0;
+		else if(cycles == 1)
+			initialTime = System.currentTimeMillis();
+		else
+			ellapsedTime = System.currentTimeMillis() - initialTime;
+		distance--; 
 		p.update();
+		return hasEnded();
+	}
+	
+	
+	
+	public boolean hasEnded() {
+		boolean hasEnded = false;
+		if(checkCollision()) {
+			System.out.println(this.ToString());
+			System.out.println("[GAME OVER] Player crashed!");
+			hasEnded = true;
+		}
+		else if(isAtEnd()) {
+			System.out.println(this.ToString());
+			System.out.println("[GAME OVER] Player wins!");
+			if(!test)
+				System.out.println("New record!: " + prettyTime + " s");
+			hasEnded = true;
+		}
+		
+		return hasEnded;
 	}
 	
 

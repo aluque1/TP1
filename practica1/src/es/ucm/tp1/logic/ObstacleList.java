@@ -6,6 +6,7 @@ public class ObstacleList {
 
 	public ObstacleList(int size) {
 		ol = new Obstacle[size];
+		Obstacle.numOfObstacles = 0;
 	}
 
 	public void add(Obstacle obs) {
@@ -22,5 +23,7 @@ public class ObstacleList {
 		}
 		return isInPos;
 	}
+	
+	
 
 }

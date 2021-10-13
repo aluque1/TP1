@@ -5,7 +5,7 @@ public class Obstacle {
 		private int row;
 		private int col;
 		private Game game;
-		static int numOfObstacles = 0;
+		public static int numOfObstacles = 0;
 		
 		
 		//Constants ------------------------
@@ -21,10 +21,6 @@ public class Obstacle {
 		
 		public static String getString() {
 			return SPRITE;
-		}
-
-		public static int getNumOfObstacles() {
-			return numOfObstacles;
 		}
 
 		public boolean isInPosition(int row, int col) {

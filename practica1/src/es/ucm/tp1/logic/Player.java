@@ -6,7 +6,7 @@ public class Player {
 		private int col;
 		private int row;
 		private Game game;
-		private int numOfCoins;
+		public static int coinsCollected;
 		private boolean alive;
 		
 		//Constants ------------------------
@@ -18,29 +18,35 @@ public class Player {
 			this.col = col;
 			this.row = row;
 			this.game = game;
-			this.numOfCoins = 0;
+			this.coinsCollected = 0;
 			this.alive = true;
 			
 		}
 		
 		public void update() {
-			// TODO 
+			col++;
 		}
 		
+		// Check if the player can move up, if it can then we need to return true and move the player one position up.
 		public boolean moveUp() {
-			/**
-			 * TODO Check if the player can move up, if it can then we need to return true and move the player
-			 * one position up.
-			 */
-			return false;
+			int futurePos = row - 1;
+			boolean valid = false;
+			if(game.isWithinBounds(futurePos)) {
+				row--;
+				valid = true;
+			}
+			return valid;
 		}
 		
+		// Check if the player can move down, if it can then we need to return true and move the player one position down.
 		public boolean moveDown() {
-			/**
-			 * TODO Check if the player can move down, if it can then we need to return true and move the player
-			 * one position down. in any other case we return false;
-			 */
-			return false;
+			int futurePos = row + 1;
+			boolean valid = false;
+			if(game.isWithinBounds(futurePos)) {
+				row++;
+				valid = true;
+			}
+			return valid;
 		}
 		
 		public boolean isPosPlayer(int row, int col) {
@@ -53,5 +59,21 @@ public class Player {
 			else
 				return DEAD_SPRITE;
 		}
+
+		public boolean isAtEnd(int end) {
+			return col == end;
+		}
+		
+		// Collides with obstacle and set alive to false;
+		public void collide() {
+			alive = false;
+		}
+		
+		// Passes over coin and collects it
+		public void pickUpCoin() {
+			coinsCollected++;
+		}
+		
+		
 
 }

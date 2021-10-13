@@ -68,7 +68,6 @@ public class GamePrinter {
 		str.append(game.getGameStatus());
 
 		// Paint game
-
 		str.append(indentedRoadBorder);
 
 		String verticalDelimiter = SPACE;

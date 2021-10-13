@@ -30,7 +30,6 @@ public class Controller {
 
 	private Game game;
 	private Scanner scanner;
-	private Level level;
 
 	public Controller(Game game, Scanner scanner) {
 		this.game = game;
@@ -44,7 +43,6 @@ public class Controller {
 	public void run() {
 		String line;
 		String[] words;
-		
 		printGame();
 		
 		while (!exit) {
@@ -65,7 +63,7 @@ public class Controller {
 				
 			// Prints the game object info
 			case "info" : case "i" :
-				// TODO Print game object info
+				System.out.println(game.getGameStatus());
 				passTurn = false;
 				break;
 				
@@ -76,32 +74,37 @@ public class Controller {
 			
 			// Passes one game cycle and moves the car UP 1 cell
 			case "q" :
-				game.moveUp();
-				passTurn = true;
+				passTurn = game.moveUp();
+				if(!passTurn)
+					System.out.println("[ERROR] : You are at the edge of the road, you can't move up.");
 				break;
 			
 			//Passes one game cycle and moves the car DOWN 1 cell
 			case "a" :
-				game.moveDown();
-				passTurn = true;
+				passTurn = game.moveDown();
+				if(!passTurn)
+					System.out.println("[ERROR] : You are at the edge of the road, you can't move down.");
 				break;
 			
 			// Exits the game
 			case "exit" : case "e" :
 				exit = true;
+				System.out.println("[GAME OVER] Player leaves the game");
 				passTurn = false; // Don't know if this is needed or not 
 				break;
 			
 			// Resets the game with the same LEVEL and SEED parameters as before
 			case "reset": case "r" :
-				game.init(level); 
+				game.init(); 
+				printGame();
 				passTurn = false;
 				break;
 			
 			// Enables test mode
 			case "test" : case "t" :
-				// TODO Enable test mode (whatever that is.)
+				game.toggleTest();
 				passTurn = false; // Don't know if this is needed or not 
+				printGame();
 				break;
 			
 			// In the default case we let the Player know that there has been an error trying to parse the command and doesn't pass a turn.
@@ -112,8 +115,13 @@ public class Controller {
 			}
 			
 			//This if is to check if we have to update the game board as there are some command that don't advance one step in the game
-			if(passTurn)
-				this.game.update();
+			if(passTurn) {
+				printGame();
+				exit = this.game.update();
+				
+			}
+				
+			
 		}
 	}
 

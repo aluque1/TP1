@@ -6,8 +6,7 @@ public class Coin {
 	private int row;
 	private int col;
 	private Game game;
-	static int numOfCoins = 0;
-	
+	public static int numOfCoins = 0;
 	
 	//Constants ------------------------
 	private final static String SPRITE = "¢";
@@ -25,13 +24,7 @@ public class Coin {
 		return SPRITE;
 	}
 
-
 	public boolean isInPosition(int row, int col) {
 		return ((this.row == row) && (this.col == col));
-	}
-
-
-	public static int getNumOfCoins() {
-		return numOfCoins;
 	}
 }
