@@ -65,26 +65,24 @@ public class Controller {
 				
 			// Prints the game object info
 			case "info" : case "i" :
-				
 				// TODO Print game object info
 				passTurn = false;
 				break;
 				
 			// Passes one game cycle without moving UP or DOWN, just FORWARD 1 cell
 			case "none" : case "n" : case "":
-				// TODO Passes one game cycle without moving up or down
 				passTurn = true;
 				break;
 			
 			// Passes one game cycle and moves the car UP 1 cell
 			case "q" :
-				// TODO Passes one game cycle and moves the car UP 1 cell
+				game.moveUp();
 				passTurn = true;
 				break;
 			
 			//Passes one game cycle and moves the car DOWN 1 cell
 			case "a" :
-				// TODO Passes one game cycle and moves the car DOWN 1 cell.
+				game.moveDown();
 				passTurn = true;
 				break;
 			
@@ -114,8 +112,8 @@ public class Controller {
 			}
 			
 			//This if is to check if we have to update the game board as there are some command that don't advance one step in the game
-			//if(passTurn)
-				//this.game.update();
+			if(passTurn)
+				this.game.update();
 		}
 	}
 

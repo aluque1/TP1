@@ -27,6 +27,22 @@ public class Player {
 			// TODO 
 		}
 		
+		public boolean moveUp() {
+			/**
+			 * TODO Check if the player can move up, if it can then we need to return true and move the player
+			 * one position up.
+			 */
+			return false;
+		}
+		
+		public boolean moveDown() {
+			/**
+			 * TODO Check if the player can move down, if it can then we need to return true and move the player
+			 * one position down. in any other case we return false;
+			 */
+			return false;
+		}
+		
 		public boolean isPosPlayer(int row, int col) {
 			return (row == this.row && col == this.col);
 		}

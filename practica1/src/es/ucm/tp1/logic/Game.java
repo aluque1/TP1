@@ -1,9 +1,33 @@
 package es.ucm.tp1.logic;
 
 import java.util.Random;
-
 import es.ucm.tp1.control.Level;
 import es.ucm.tp1.view.GamePrinter;
+
+
+/**
+ * @author aluqu
+ *	 TODO:: 
+ *		-PLAYER:
+ *			(I think the movement should return a boolean, to display a message that tell you why you couldn't move
+ *			 ie. the car is at the top of the road and the player tries to move up, it should display a message telling
+ *			 the player why that movement can't be performed)
+ *			· moveUp() -- Just needs to be implemented 
+ *			· moveDown() -- Just needs to be implemented 
+ *			· moveForward() 
+ *			· Obstacle Collision -- not to sure if we do this in the player, or in the game.
+ *			· Coin Collision
+ *		-CONTROLLER
+ *			x Finish all of the commands, can only be done once all the player methods are done
+ *				(Only the test is left to be done.)
+ *	
+ *		-GAMEPRINTER
+ *			· Print the board properly, once the player moves, we need to make the road fall behind by one
+ *		-GAME 
+ *			· Implement the appropriate calling methods to be able to implement the commands and the player movement
+ *			· Add the game info to print
+ */
+
 
 public class Game {
 	
@@ -108,6 +132,26 @@ public class Game {
 
 	public String ToString() {
 		return printer.toString();
+	}
+
+	
+	// Game altering methods ----------------------------
+	
+	public boolean moveUp() {
+		return p.moveUp();
+	}
+	
+	public boolean moveDown() {
+		return p.moveDown();
+	}
+	
+	public void update() {
+		/**
+		 * TODO:: 
+		 *  In the update we make the player move forward, always. If the user command is UP or DOWN
+		 *  we also need to make the players position change accordingly. 
+		 */
+		p.update();
 	}
 	
 
