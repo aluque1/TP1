@@ -12,7 +12,8 @@ import es.ucm.tp1.view.GamePrinter;
  *	Preguntar la meta.
  *	Si se eliminan las monedas cuando se pasan.
  *	coinsCollected static o getterssetter?
- *	
+ *	- Generar la fila antes que el random en los obstaculos, y utlizar next double en vez de next int para obtener lo mismo que en los test.
+ *  - Caracrter de meta no se imprime en position to string
  */
 
 
@@ -64,8 +65,9 @@ public class Game {
 		private void obstaclePlacer() {
 			int initialPoint = level.getVisibility()/2;
 			for(int i = initialPoint; i < level.getLength() - 1; i++) {
+				int auxRow = (int) (rand.nextDouble() * level.getWidth());
 				if(level.getObstacleFrequency() < rand.nextDouble()) {
-					Obstacle obs = new Obstacle(rand.nextInt(level.getWidth()), i, this);
+					Obstacle obs = new Obstacle(auxRow, i, this);
 					ol.add(obs);
 				}
 			}
@@ -79,7 +81,7 @@ public class Game {
 		
 		for(int i = initialPoint; i < level.getLength() - 1; i++) {
 			if(level.getCoinFrequency() > rand.nextDouble()) {
-				int auxRow = rand.nextInt(level.getWidth());
+				int auxRow = (int) (rand.nextDouble() * level.getWidth());
 				if(!isPosObstacle(auxRow, i)) {
 					Coin coin = new Coin(auxRow, i, this);
 					cl.add(coin);
@@ -151,6 +153,8 @@ public class Game {
 			cell = Obstacle.getString();
 		else if(isPosCoin(i, (j + cycles)))
 			cell = Coin.getString();
+		else if (j == level.getLength() - 1) //No funciona no se porque
+			cell = "¦";
 		return cell;
 	}
 

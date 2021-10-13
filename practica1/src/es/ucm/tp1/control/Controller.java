@@ -74,16 +74,24 @@ public class Controller {
 			
 			// Passes one game cycle and moves the car UP 1 cell
 			case "q" :
-				passTurn = game.moveUp();
-				if(!passTurn)
+				if(!game.moveUp())
 					System.out.println("[ERROR] : You are at the edge of the road, you can't move up.");
+				else if (game.hasEnded()) { // No estoy seguro si se puede mover en diagonal o te chocas con el de arriba
+					passTurn = false;
+					exit = true;
+				}
+				else passTurn = true;
 				break;
 			
 			//Passes one game cycle and moves the car DOWN 1 cell
 			case "a" :
-				passTurn = game.moveDown();
-				if(!passTurn)
+				if(!game.moveDown())
 					System.out.println("[ERROR] : You are at the edge of the road, you can't move down.");
+				else if (game.hasEnded()) { // Lo mismo que con el de arriba.
+					passTurn = false;
+					exit = true;
+				}
+				else passTurn = true;
 				break;
 			
 			// Exits the game
@@ -116,12 +124,11 @@ public class Controller {
 			
 			//This if is to check if we have to update the game board as there are some command that don't advance one step in the game
 			if(passTurn) {
-				printGame();
 				exit = this.game.update();
+			if (!exit)
+				printGame();
 				
 			}
-				
-			
 		}
 	}
 

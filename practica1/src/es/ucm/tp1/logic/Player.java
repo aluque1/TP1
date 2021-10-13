@@ -18,7 +18,7 @@ public class Player {
 			this.col = col;
 			this.row = row;
 			this.game = game;
-			this.coinsCollected = 0;
+			Player.coinsCollected = 0;
 			this.alive = true;
 			
 		}
