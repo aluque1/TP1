@@ -16,7 +16,7 @@ public class Game {
 	private Player p;
 	private Level level;
 	
-	private boolean test = false;
+	private boolean test;
 	private int cycles;
 	private int distance;
 	
@@ -31,13 +31,13 @@ public class Game {
 		this.level = level;
 		this.maxItems = level.getLength() - (level.getVisibility()/2);
 		printer = new GamePrinter(this, level.getNumOfCols(), level.getNumOfRows());
-		
 		init();
 	}
 
 	// This method will be called when we call the reset command from Controller
 	public void init() {
 		rand = new Random(this.seed);
+		test = false;
 		cycles = 0;
 		distance = this.level.getLength();
 		ellapsedTime = 0;
@@ -55,7 +55,6 @@ public class Game {
 			for(int i = initialPoint; i < level.getLength() - 1; i++) {
 				int auxRow = rand.nextInt(level.getWidth());
 				if(rand.nextDouble() < level.getObstacleFrequency()) {
-					
 					Obstacle obs = new Obstacle(auxRow, i, this);
 					ol.add(obs);
 				}
@@ -79,7 +78,7 @@ public class Game {
 	}
 	
 	public void toggleTest() {
-		test = true;
+		test = !test;
 	}
 
 	public String getGameStatus() {
@@ -119,7 +118,8 @@ public class Game {
 	// Checks whether the player has collided with an obstacle or needs to pick up a coin
 	public boolean checkCollision() {
 		boolean collision = false;
-		for(int row = 0; row < level.getNumOfRows(); row++) {
+		int row = 0;
+		while(!collision && row < level.getNumOfRows()) {
 			if(isPosPlayer(row, cycles) && isPosObstacle(row, cycles)) {
 				p.collide();
 				collision = true;
@@ -128,6 +128,7 @@ public class Game {
 				p.pickUpCoin();
 				cl.pickCoinInPos(row, cycles);
 			}
+			row++;
 		}
 		return collision;
 	}

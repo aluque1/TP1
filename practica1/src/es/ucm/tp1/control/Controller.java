@@ -51,6 +51,8 @@ public class Controller {
 			line = scanner.nextLine();
 			words = line.toLowerCase().trim().split("\\st");
 			
+			System.out.println("[DEBUG] Executing: " + words[0]);
+			
 			// We add a switch statement to create the command options selection
 			switch (words[0]) {
 			
@@ -109,9 +111,10 @@ public class Controller {
 				printGame();
 				break;
 			
+			
 			// In the default case we let the Player know that there has been an error trying to parse the command and doesn't pass a turn.
 			default:
-				System.out.println("[ERROR]" + UNKNOWN_COMMAND_MSG);
+				System.out.println("[ERROR] " + UNKNOWN_COMMAND_MSG);
 				passTurn = false;
 				break;
 			}
