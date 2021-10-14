@@ -4,19 +4,6 @@ import java.util.Random;
 import es.ucm.tp1.control.Level;
 import es.ucm.tp1.view.GamePrinter;
 
-
-/**
- * @author aluqu
- * 
- *	 TODO::
- *	Preguntar la meta.
- *	Si se eliminan las monedas cuando se pasan.
- *	coinsCollected static o getterssetter?
- *	- Generar la fila antes que el random en los obstaculos, y utlizar next double en vez de next int para obtener lo mismo que en los test.
- *  - Caracrter de meta no se imprime en position to string
- */
-
-
 public class Game {
 	
 	// Attributes --------------------------------------------------------
@@ -44,6 +31,7 @@ public class Game {
 		this.level = level;
 		this.maxItems = level.getLength() - (level.getVisibility()/2);
 		printer = new GamePrinter(this, level.getNumOfCols(), level.getNumOfRows());
+		
 		init();
 	}
 
@@ -65,8 +53,9 @@ public class Game {
 		private void obstaclePlacer() {
 			int initialPoint = level.getVisibility()/2;
 			for(int i = initialPoint; i < level.getLength() - 1; i++) {
-				int auxRow = (int) (rand.nextDouble() * level.getWidth());
-				if(level.getObstacleFrequency() < rand.nextDouble()) {
+				int auxRow = rand.nextInt(level.getWidth());
+				if(rand.nextDouble() < level.getObstacleFrequency()) {
+					
 					Obstacle obs = new Obstacle(auxRow, i, this);
 					ol.add(obs);
 				}
@@ -78,10 +67,9 @@ public class Game {
 	// and there isn't an obstacle in this position.
 	private void coinPlacer() {
 		int initialPoint = level.getVisibility()/2;
-		
 		for(int i = initialPoint; i < level.getLength() - 1; i++) {
-			if(level.getCoinFrequency() > rand.nextDouble()) {
-				int auxRow = (int) (rand.nextDouble() * level.getWidth());
+			int auxRow = rand.nextInt(level.getWidth());
+			if(rand.nextDouble() < level.getCoinFrequency()) {
 				if(!isPosObstacle(auxRow, i)) {
 					Coin coin = new Coin(auxRow, i, this);
 					cl.add(coin);
@@ -94,10 +82,10 @@ public class Game {
 		test = true;
 	}
 
-	public Object getGameStatus() {
+	public String getGameStatus() {
 		StringBuilder str = new StringBuilder();
 		str.append("Distance: " + distance + '\n');
-		str.append("Coins: " + Player.coinsCollected + '\n');
+		str.append("Coins: " + p.getCoinsCollected() + '\n');
 		str.append("Cycles: " + cycles + '\n');
 		str.append("Total obstacles: " + Obstacle.numOfObstacles + '\n');
 		str.append("Total coins: " + Coin.numOfCoins + '\n');
@@ -153,7 +141,7 @@ public class Game {
 			cell = Obstacle.getString();
 		else if(isPosCoin(i, (j + cycles)))
 			cell = Coin.getString();
-		else if (j == level.getLength() - 1) //No funciona no se porque
+		else if (j + cycles == level.getLength() - 1)
 			cell = "¦";
 		return cell;
 	}

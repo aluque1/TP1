@@ -6,7 +6,7 @@ public class Player {
 		private int col;
 		private int row;
 		private Game game;
-		public static int coinsCollected;
+		public int coinsCollected;
 		private boolean alive;
 		
 		//Constants ------------------------
@@ -18,7 +18,7 @@ public class Player {
 			this.col = col;
 			this.row = row;
 			this.game = game;
-			Player.coinsCollected = 0;
+			this.coinsCollected = 0;
 			this.alive = true;
 			
 		}
@@ -74,6 +74,8 @@ public class Player {
 			coinsCollected++;
 		}
 		
-		
+		public int getCoinsCollected() {
+			return coinsCollected;
+		}
 
 }
