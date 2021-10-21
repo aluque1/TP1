@@ -13,13 +13,22 @@ public abstract class Command {
 		new HelpCommand(),
 		new InfoCommand(),
 		new UpdateCommand(),
+		new MoveUpCommand(),
+		new MoveDownCommand(),
+		new ExitCommand(),
+		new ResetCommand(),
+		new TestCommand()
 	};
 	/* @formatter:on */
 
 	public static Command getCommand(String[] commandWords) {
 		Command command = null;
-		// TODO Add your code
-		System.out.format("[ERROR]: %s%n%n", UNKNOWN_COMMAND_MSG);
+		for(int i = 0; i < AVAILABLE_COMMANDS.length; i++) {
+			command = AVAILABLE_COMMANDS[i].parse(commandWords);
+		}
+		if(command == null)
+			System.out.format("[ERROR]: %s%n%n", UNKNOWN_COMMAND_MSG);
+		
 		return command;
 	}
 
@@ -56,6 +65,14 @@ public abstract class Command {
 		return null;
 	}
 
+	protected String getHelp() {
+		StringBuilder str = new StringBuilder();
+		for(int i = 0; i < AVAILABLE_COMMANDS.length; i++) {
+			str.append(AVAILABLE_COMMANDS[i].details + ": " + AVAILABLE_COMMANDS[i].help + '\n' );
+		}
+		return str.toString();
+		
+	}
 	// TODO Add your code
 
 }

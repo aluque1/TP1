@@ -1,7 +1,9 @@
 package es.ucm.tp1.supercars.control.commands;
 
 import es.ucm.tp1.supercars.logic.Game;
-import es.ucm.tp1.supercars.utils.StringUtils;
+
+// TODO ask what this is.
+//import es.ucm.tp1.supercars.utils.StringUtils;
 
 public class HelpCommand extends Command {
 
@@ -19,10 +21,10 @@ public class HelpCommand extends Command {
 
 	@Override
 	public boolean execute(Game game) {
-		StringBuilder buffer = new StringBuilder("Available commands:");
+		StringBuilder buffer = new StringBuilder("Available commands:" + '\n');
 
-		// TODO Add your code
-
+		buffer.append(getHelp());
+		
 		System.out.println(buffer.toString());
 
 		return false;

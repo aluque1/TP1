@@ -1,6 +1,7 @@
 package es.ucm.tp1.logic;
 
 import java.util.Random;
+
 import es.ucm.tp1.control.Level;
 import es.ucm.tp1.view.GamePrinter;
 
