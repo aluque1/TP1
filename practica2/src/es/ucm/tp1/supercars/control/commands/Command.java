@@ -18,6 +18,7 @@ public abstract class Command {
 		new ExitCommand(),
 		new ResetCommand(),
 		new TestCommand()
+		// Add the new commands created here last one without a coma
 	};
 	/* @formatter:on */
 

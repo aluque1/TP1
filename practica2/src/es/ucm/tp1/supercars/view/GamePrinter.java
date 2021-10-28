@@ -3,13 +3,13 @@ package es.ucm.tp1.supercars.view;
 import es.ucm.tp1.supercars.control.Level;
 import es.ucm.tp1.supercars.logic.Game;
 import es.ucm.tp1.supercars.logic.gameobjects.Coin;
-import es.ucm.tp1.supercars.logic.gameobjects.Grenade;
+//import es.ucm.tp1.supercars.logic.gameobjects.Grenade;
 import es.ucm.tp1.supercars.logic.gameobjects.Obstacle;
-import es.ucm.tp1.supercars.logic.gameobjects.Pedestrian;
-import es.ucm.tp1.supercars.logic.gameobjects.SuperCoin;
-import es.ucm.tp1.supercars.logic.gameobjects.Truck;
-import es.ucm.tp1.supercars.logic.gameobjects.Turbo;
-import es.ucm.tp1.supercars.logic.gameobjects.Wall;
+//import es.ucm.tp1.supercars.logic.gameobjects.Pedestrian;
+//import es.ucm.tp1.supercars.logic.gameobjects.SuperCoin;
+//import es.ucm.tp1.supercars.logic.gameobjects.Truck;
+//import es.ucm.tp1.supercars.logic.gameobjects.Turbo;
+//import es.ucm.tp1.supercars.logic.gameobjects.Wall;
 import es.ucm.tp1.supercars.utils.StringUtils;
 
 public class GamePrinter {
@@ -88,12 +88,17 @@ public class GamePrinter {
 		.append(TOTAL_OBSTACLES_MSG).append(Obstacle.getObstaclesCount()).append(StringUtils.LINE_SEPARATOR)
 		.append(TOTAL_COINS_MSG).append(Coin.getCoinsCount());
 		/* @formatter:on */
+		
+		
 		if (game.getLevel().hasAdvancedObjects()) {
+// TODO UNCOMMENT IN P 2.2
+			/*
 			if (SuperCoin.hasSuperCoin()) {
 				buffer.append(SUPERCOIN_PRESENT);
 			}
+			*/
+			
 		}
-
 		if (!game.isTestMode()) {
 			/* @formatter:off */
 			buffer
@@ -165,9 +170,10 @@ public class GamePrinter {
 		.append(StringUtils.LINE_SEPARATOR).append(Coin.INFO)
 		.append(StringUtils.LINE_SEPARATOR).append(Obstacle.INFO);
 		/* @formatter:on */
-
 		if (level.hasAdvancedObjects()) {
 			/* @formatter:off */
+// TODO UNCOMMENT IN P 2.2
+			/*
 			buffer
 			.append(StringUtils.LINE_SEPARATOR).append(Grenade.INFO)
 			.append(StringUtils.LINE_SEPARATOR).append(Wall.INFO)
@@ -175,9 +181,10 @@ public class GamePrinter {
 			.append(StringUtils.LINE_SEPARATOR).append(SuperCoin.INFO)
 			.append(StringUtils.LINE_SEPARATOR).append(Truck.INFO)
 			.append(StringUtils.LINE_SEPARATOR).append(Pedestrian.INFO);
+			*/
 			/* @formatter:on */
 		}
-
+	
 		return buffer.toString();
 	}
 }

@@ -1,9 +1,11 @@
 package es.ucm.tp1.supercars.control.commands;
 
 import es.ucm.tp1.supercars.logic.Game;
+import es.ucm.tp1.supercars.logic.gameobjects.GameObject;
+import es.ucm.tp1.supercars.view.GamePrinter;
 //TODO ask what this is.
 //import es.ucm.tp1.supercars.utils.StringUtils;
-import es.ucm.tp1.supercars.view.GamePrinter;
+
 
 public class InfoCommand extends Command {
 
@@ -21,8 +23,8 @@ public class InfoCommand extends Command {
 
 	@Override
 	public boolean execute(Game game) {
-		System.out.print("Available objects:");
-		// TODO 
+		System.out.println("Available objects:");
+		GamePrinter.description(game.getLevel());
 		return false;
 	}
 

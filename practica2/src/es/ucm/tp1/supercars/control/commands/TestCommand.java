@@ -14,13 +14,12 @@ public class TestCommand extends Command{
 	
 	public TestCommand() {
 		super(NAME, SHORTCUT, DETAILS, HELP);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public boolean execute(Game game) {
-		// TODO Auto-generated method stub
-		return false;
+		game.toggleTest();
+		return true;
 	}
 
 }

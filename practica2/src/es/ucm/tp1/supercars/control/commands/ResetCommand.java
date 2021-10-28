@@ -14,7 +14,6 @@ public class ResetCommand extends Command{
 
 	public ResetCommand() {
 		super(NAME, SHORTCUT, DETAILS, HELP);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

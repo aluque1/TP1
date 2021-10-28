@@ -1,13 +1,13 @@
-package es.ucm.tp1.utils;
+package es.ucm.tp1.supercars.utils;
 
 /**  
  * @author Simon Pickin
  * @author Ivan Martinez-Ortiz
  */
 public class StringUtils {
-	
-	
-	
+
+	public static final Object LINE_SEPARATOR = '\n';
+
 	public static String repeat(char c, int length) {
 		StringBuilder buffer = new StringBuilder();
 		for (int i = 0; i < length; i++) {

@@ -18,8 +18,12 @@ public class MoveDownCommand extends Command{
 
 	@Override
 	public boolean execute(Game game) {
-		// TODO Auto-generated method stub
-		return false;
+		if(game.moveDown())
+			return true;
+		else{
+			System.out.println("[ERROR] : You are at the edge of the road, you can't move down.");
+			return false;
+		}
 	}
 
 }

@@ -19,7 +19,7 @@ public class ExitCommand extends Command{
 	
 	@Override
 	public boolean execute(Game game) {
-		// TODO Auto-generated method stub
+		game.playerExitGame();
 		return false;
 	}
 

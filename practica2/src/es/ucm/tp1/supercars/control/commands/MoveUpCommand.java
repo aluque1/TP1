@@ -18,8 +18,13 @@ public class MoveUpCommand extends Command{
 
 	@Override
 	public boolean execute(Game game) {
-		// TODO Auto-generated method stub
-		return false;
+		if(game.moveUp())
+			return true;
+		else {
+			System.out.println("[ERROR] : You are at the edge of the road, you can't move up.");
+			return false;
+		}
+			
 	}
 
 }
