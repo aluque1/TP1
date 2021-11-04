@@ -16,4 +16,9 @@ public class GameObjectContainer {
 			 	obj.update();
 			}
 	}
+
+	public void add(GameObject go) {
+		// TODO Auto-generated method stub
+		
+	}
 }

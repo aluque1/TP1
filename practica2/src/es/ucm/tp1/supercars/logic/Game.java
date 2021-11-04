@@ -5,10 +5,14 @@ package es.ucm.tp1.supercars.logic;
 /** TODO :: Things we still have to do
  * 		·ResetCommand is still not done.
  * 		·Create Game Constructor.
+ * 		¿Es necesario que todos los metodos get de game sean publicos?
  */
 
 import es.ucm.tp1.supercars.logic.gameobjects.GameObjectContainer;
 import es.ucm.tp1.supercars.logic.gameobjects.Player;
+
+import java.util.Random;
+
 import es.ucm.tp1.supercars.control.Level;
 import es.ucm.tp1.supercars.logic.gameobjects.GameObject;
 
@@ -16,14 +20,24 @@ public class Game {
 
 	Player player;
 	GameObjectContainer container;
+	Level level;
 	boolean test;
 	boolean playerExit;
 	boolean newRecord;
-	Long elapsedTime;
+	long elapsedTime;
 	int cycle;
+	Long seed;
+	Random rand;
+	
+	
 	
 	public Game(Long seed, Level level) {
-		
+		this.seed = seed;
+		this.level = level;
+	}
+	
+	public void init() {
+		rand = new Random(this.seed);
 	}
 	
 	public boolean isFinished() {
@@ -32,18 +46,15 @@ public class Game {
 	}
 
 	public int getVisibility() {
-		// TODO Auto-generated method stub
-		return 0;
+		return level.getVisibility();
 	}
 
 	public int getRoadLength() {
-		// TODO Auto-generated method stub
-		return 0;
+		return level.getLength();
 	}
 
 	public int getRoadWidth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return level.getWidth();
 	}
 	
 	// Command calling methods -------------------------------------------
@@ -55,14 +66,15 @@ public class Game {
 
 	// Game object generation --------------------------------------------
 	public int getRandomLane() {
-		// TODO Auto-generated method stub
-		return 0;
+		return rand.nextInt(this.getRoadLength());
 	}
 
-	public void tryToAddObject(GameObject go, double obstacleFrequency) {
-		// TODO Auto-generated method stub
-		
+	public void tryToAddObject(GameObject go, double frequency) {
+			if(rand.nextDouble() < frequency) {
+				container.add(go);
+			}
 	}
+			
 	
 	// Player interaction methods -----------------------------------------
 
