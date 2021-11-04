@@ -17,8 +17,34 @@ public class GameObjectContainer {
 			}
 	}
 
-	public void add(GameObject go) {
-		// TODO Auto-generated method stub
+	public void addObject(GameObject go) {
+		if (this.isPosEmpty(go.getX(), go.getY()))
+		gameObjects.add(go);
+		go.onEnter();
+	}
+	
+	private boolean isPosEmpty(int x, int y){
+		int i = 0;
+		boolean empty = true;
 		
+		while (i < gameObjects.size() && empty) {
+			empty = !(gameObjects.get(i).isInPosition(x, y));
+		}
+		return empty;
+	}
+
+	public String getStringAtPos(int x, int y) {
+		int i = 0;
+		boolean encontrado = false;
+		String symbol = "";
+		
+		while (i < gameObjects.size() && !encontrado) {
+			if (gameObjects.get(i).isInPosition(x, y)) {
+				symbol = gameObjects.get(i).toString();
+				encontrado = true;
+			}
+			i++;
+		}
+		return symbol;
 	}
 }

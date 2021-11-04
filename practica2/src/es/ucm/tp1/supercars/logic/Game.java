@@ -71,7 +71,7 @@ public class Game {
 
 	public void tryToAddObject(GameObject go, double frequency) {
 			if(rand.nextDouble() < frequency) {
-				container.add(go);
+				container.addObject(go);
 			}
 	}
 			
@@ -88,8 +88,7 @@ public class Game {
 	// Getters and Setters ------------------------------------------------
 	// GamePrinter methods ------------------------------------------------
 	public String positionToString(int x, int y) {
-		// TODO Auto-generated method stub
-		return null;
+		return container.getStringAtPos(x, y);
 	}
 	
 	public int distanceToGoal() {
