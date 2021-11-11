@@ -34,11 +34,18 @@ public class Game {
 	public Game(Long seed, Level level) {
 		this.seed = seed;
 		this.level = level;
+		
+		
+		init(seed, level);
 	}
 	
-	public void init() {
+	public void init(Long seed, Level level) {
 		rand = new Random(this.seed);
+		container = new GameObjectContainer();
 	}
+	
+	
+	
 	
 	public boolean isFinished() {
 		// TODO Auto-generated method stub
@@ -106,8 +113,7 @@ public class Game {
 	}
 
 	public Level getLevel() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.level;
 	}
 
 	public boolean isTestMode() {
