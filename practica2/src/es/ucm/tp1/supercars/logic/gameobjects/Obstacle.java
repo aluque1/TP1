@@ -6,9 +6,11 @@ public class Obstacle extends GameObject{
 	
 	public static final String INFO = "[Obstacle] hits car";
 	private static int numOfObstacles = 0;
+	private static final String SPRITE = "░";
 	
 	public Obstacle(Game game, int x, int randomLane){
 		super(game, x, randomLane);
+		symbol = SPRITE;
 		numOfObstacles++;
 	}
 

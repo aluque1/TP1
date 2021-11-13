@@ -12,20 +12,22 @@ public abstract class Command {
 	protected static final Command[] AVAILABLE_COMMANDS = {
 		new HelpCommand(),
 		new InfoCommand(),
-		new UpdateCommand(),
 		new MoveUpCommand(),
 		new MoveDownCommand(),
 		new ExitCommand(),
 		new ResetCommand(),
-		new TestCommand()
+		new TestCommand(),
+		new UpdateCommand()
 		// Add the new commands created here last one without a coma
 	};
 	/* @formatter:on */
 
 	public static Command getCommand(String[] commandWords) {
 		Command command = null;
-		for(int i = 0; i < AVAILABLE_COMMANDS.length; i++) {
+		int i = 0;
+		while(command == null && i < AVAILABLE_COMMANDS.length) {
 			command = AVAILABLE_COMMANDS[i].parse(commandWords);
+			i++;
 		}
 		if(command == null)
 			System.out.format("[ERROR]: %s%n%n", UNKNOWN_COMMAND_MSG);

@@ -4,13 +4,13 @@ import es.ucm.tp1.supercars.logic.Game;
 
 public class MoveDownCommand extends Command{
 	
-	private static final String NAME = "move up";
+	private static final String NAME = "move down";
 
-	private static final String DETAILS = "Move up[q]";
+	private static final String DETAILS = "[a] Move up";
 
-	private static final String SHORTCUT = "q";
+	private static final String SHORTCUT = "a";
 
-	private static final String HELP = "moves the car up";
+	private static final String HELP = "moves the car down";
 
 	public MoveDownCommand() {
 		super(NAME, SHORTCUT, DETAILS, HELP);
@@ -18,8 +18,10 @@ public class MoveDownCommand extends Command{
 
 	@Override
 	public boolean execute(Game game) {
-		if(game.moveDown())
+		if(game.moveDown()){
+			game.update();
 			return true;
+		}
 		else{
 			System.out.println("[ERROR] : You are at the edge of the road, you can't move down.");
 			return false;

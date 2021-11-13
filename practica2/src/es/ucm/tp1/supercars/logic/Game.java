@@ -24,11 +24,14 @@ public class Game {
 	boolean test;
 	boolean playerExit;
 	boolean newRecord;
-	long elapsedTime;
-	int cycle;
 	Long seed;
 	Random rand;
 	
+	// Attributes that describe the game ---------------------------
+	long elapsedTime; 
+	long initialTime; 
+	int cycle;
+	int distance;
 	
 	
 	public Game(Long seed, Level level) {
@@ -42,10 +45,16 @@ public class Game {
 	public void init(Long seed, Level level) {
 		rand = new Random(this.seed);
 		container = new GameObjectContainer();
+		GameObjectGenerator.generateGameObjects(this, level);
+		player = new Player(this, 0, getRoadWidth()/2);
+		
+		// initialisation of description attributes
+		distance = getRoadLength();
+		cycle = 0;
+		elapsedTime = 0;
+		initialTime = System.currentTimeMillis();
+		
 	}
-	
-	
-	
 	
 	public boolean isFinished() {
 		// TODO Auto-generated method stub
@@ -64,16 +73,22 @@ public class Game {
 		return level.getWidth();
 	}
 	
+	public boolean isWithinBounds(int row) {
+		return (row < getRoadWidth() && row >= 0);
+	}
 	// Command calling methods -------------------------------------------
 	
 	public void update() {
 		container.update();
 		player.update();
+		cycle++;
+		distance--;
+		elapsedTime = System.currentTimeMillis() - initialTime;
 	}
 
 	// Game object generation --------------------------------------------
 	public int getRandomLane() {
-		return rand.nextInt(this.getRoadLength());
+		return rand.nextInt(this.getRoadWidth());
 	}
 
 	public void tryToAddObject(GameObject go, double frequency) {
@@ -93,14 +108,17 @@ public class Game {
 		return player.moveDown();
 	}
 	// Getters and Setters ------------------------------------------------
+	
 	// GamePrinter methods ------------------------------------------------
 	public String positionToString(int x, int y) {
-		return container.getStringAtPos(x, y);
+		if(player.isInPosition(x + cycle, y))
+			return player.toString();
+		else
+			return container.getStringAtPos(x + cycle, y);
 	}
 	
 	public int distanceToGoal() {
-		// TODO Auto-generated method stub
-		return 0;
+		return distance;
 	}
 
 	public int playerCoins() {

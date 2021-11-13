@@ -29,6 +29,7 @@ public class GameObjectContainer {
 		
 		while (i < gameObjects.size() && empty) {
 			empty = !(gameObjects.get(i).isInPosition(x, y));
+			i++;
 		}
 		return empty;
 	}
@@ -47,4 +48,6 @@ public class GameObjectContainer {
 		}
 		return symbol;
 	}
+	
+	
 }

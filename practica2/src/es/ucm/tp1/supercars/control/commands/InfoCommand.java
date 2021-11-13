@@ -24,7 +24,7 @@ public class InfoCommand extends Command {
 	@Override
 	public boolean execute(Game game) {
 		System.out.println("Available objects:");
-		GamePrinter.description(game.getLevel());
+		System.out.println(GamePrinter.description(game.getLevel()));
 		return false;
 	}
 

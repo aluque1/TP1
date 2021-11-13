@@ -6,7 +6,7 @@ public class MoveUpCommand extends Command{
 
 	private static final String NAME = "move up";
 
-	private static final String DETAILS = "Move up[q]";
+	private static final String DETAILS = "[q] Move up";
 
 	private static final String SHORTCUT = "q";
 
@@ -18,8 +18,11 @@ public class MoveUpCommand extends Command{
 
 	@Override
 	public boolean execute(Game game) {
-		if(game.moveUp())
+		if(game.moveUp()) {
+			game.update();
 			return true;
+		}
+			
 		else {
 			System.out.println("[ERROR] : You are at the edge of the road, you can't move up.");
 			return false;

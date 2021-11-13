@@ -29,18 +29,28 @@ public class Player extends GameObject{
 	}
 	
 	public boolean moveUp() {
-		// TODO Auto-generated method stub
-		return false;
+		int futurePos = y - 1;
+		if(game.isWithinBounds(futurePos)) {
+			y = futurePos;
+			return true;
+		}
+		else
+			return false;
 	}
 
 	public boolean moveDown() {
-		// TODO Auto-generated method stub
-		return false;
+		int futurePos = y + 1;
+		if(game.isWithinBounds(futurePos)) {
+			y = futurePos;
+			return true;
+		}
+		else
+			return false;
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		x++;
 		
 	}
 
@@ -50,6 +60,14 @@ public class Player extends GameObject{
 		
 	}
 
+	@Override
+	public String toString() {
+		if (isAlive()) {
+			return ">";
+		}
+		else
+			return "@";
+	}
 	
 	
 

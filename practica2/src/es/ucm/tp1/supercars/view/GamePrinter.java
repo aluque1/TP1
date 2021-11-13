@@ -166,11 +166,9 @@ public class GamePrinter {
 	public static String description(Level level) {
 		StringBuilder buffer = new StringBuilder("[Car] the racing car");
 		/* @formatter:off */
-		buffer
-		.append(StringUtils.LINE_SEPARATOR).append(Coin.INFO)
-		.append(StringUtils.LINE_SEPARATOR).append(Obstacle.INFO);
+		buffer.append(StringUtils.LINE_SEPARATOR).append(Coin.INFO).append(StringUtils.LINE_SEPARATOR).append(Obstacle.INFO);
 		/* @formatter:on */
-		if (level.hasAdvancedObjects()) {
+		//if (level.hasAdvancedObjects()) {
 			/* @formatter:off */
 // TODO UNCOMMENT IN P 2.2
 			/*
@@ -183,7 +181,7 @@ public class GamePrinter {
 			.append(StringUtils.LINE_SEPARATOR).append(Pedestrian.INFO);
 			*/
 			/* @formatter:on */
-		}
+		//}
 	
 		return buffer.toString();
 	}
