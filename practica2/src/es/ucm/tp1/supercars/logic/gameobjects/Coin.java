@@ -36,7 +36,7 @@ public class Coin extends GameObject{
 
 	@Override
 	public void onDelete() {
-		
+		numOfCoins--;
 	}
 
 	public static Object getCoinsCount() {

@@ -35,8 +35,7 @@ public class Obstacle extends GameObject{
 
 	@Override
 	public void onDelete() {
-		// TODO Auto-generated method stub
-		
+		numOfObstacles--;
 	}
 
 	public static int getObstaclesCount() {

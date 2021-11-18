@@ -28,7 +28,7 @@ public class Player extends GameObject{
 
 	@Override
 	public boolean receiveCollision(Player player) {
-		// TODO Auto-generated method stub
+		// Aun no
 		return false;
 	}
 
@@ -72,7 +72,7 @@ public class Player extends GameObject{
 
 	@Override
 	public void onDelete() {
-		// TODO Auto-generated method stub
+		// empty because never gets deleted.
 
 	}
 

@@ -4,7 +4,6 @@ package es.ucm.tp1.supercars.logic;
 
 /** TODO :: Things we still have to do
  * 		·ResetCommand is still not done.
- * 		·Create Game Constructor.
  * 		¿Es necesario que todos los metodos get de game sean publicos?
  */
 
@@ -35,19 +34,16 @@ public class Game {
 	
 	
 	public Game(Long seed, Level level) {
-		this.seed = seed;
-		this.level = level;
-		
-		
 		init(seed, level);
 	}
 	
 	public void init(Long seed, Level level) {
+		this.seed = seed;
+		this.level = level;
 		rand = new Random(this.seed);
 		container = new GameObjectContainer();
 		GameObjectGenerator.generateGameObjects(this, level);
 		player = new Player(this, 0, getRoadWidth()/2);
-		
 		// initialisation of description attributes
 		distance = getRoadLength();
 		cycle = 0;
@@ -56,9 +52,16 @@ public class Game {
 		
 	}
 	
+	public void reset(String[] params) {
+		if(params.length == 0)
+			init(seed, level);
+		else
+			init(Long.parseLong(params[0]), Level.valueOfIgnoreCase(params[1]));
+	}
+	
+	
 	public boolean isFinished() {
-		// TODO Auto-generated method stub
-		return false;
+		return playerExit || hasArrived() || !player.isAlive();
 	}
 
 	public int getVisibility() {
@@ -81,8 +84,10 @@ public class Game {
 	public void update() {
 		container.update();
 		player.update();
+		container.removeDead();
 		cycle++;
 		distance--;
+		
 		elapsedTime = System.currentTimeMillis() - initialTime;
 	}
 
@@ -111,10 +116,13 @@ public class Game {
 	
 	// GamePrinter methods ------------------------------------------------
 	public String positionToString(int x, int y) {
-		if(player.isInPosition(x + cycle, y))
+		
+		if(player.isInPosition(x + player.getX(), y))
 			return player.toString();
+		else if(x + player.getX() == level.getLength() - 1)
+			return "¦";
 		else
-			return container.getStringAtPos(x + cycle, y);
+			return container.getStringAtPos(x + player.getX(), y);
 	}
 	
 	// Getters and setters
@@ -124,8 +132,7 @@ public class Game {
 	}
 
 	public int playerCoins() {
-		// TODO Auto-generated method stub
-		return 0;
+		return player.getCoinsCollected();
 	}
 
 	public int getCycle() {
@@ -151,13 +158,13 @@ public class Game {
 	public void playerExitGame() {
 		playerExit = true;
 	}
+	
 	public boolean isUserExit() {
 		return playerExit;
 	}
 
 	public boolean hasArrived() {
-		// TODO IF THE PLAYER HAS REACHED THE END LINE
-		return false;
+		return distance <= 0;
 	}
 
 	public boolean isNewRecord() {
@@ -172,6 +179,7 @@ public class Game {
 	public Collider getObjectInPosition(int x, int y) {
 		return container.getObjectInPosition(x, y);
 	}
+
 	
 	
 }

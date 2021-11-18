@@ -16,9 +16,6 @@ public class GameObjectContainer {
 	public void update() {
 		for (GameObject obj : gameObjects) {
 			 	obj.update();
-			 	if(!obj.isAlive()) {
-			 		gameObjects.remove(obj);
-			 	}
 			}
 	}
 
@@ -68,4 +65,13 @@ public class GameObjectContainer {
 		}
 		return obj;
 	}
+	
+	public void removeDead() {
+		// SI PETA ES POR ESTO
+		for(int i = 0; i < gameObjects.size(); i++)
+		 	if(!gameObjects.get(i).isAlive()) {
+		 		gameObjects.get(i).onDelete();
+		 		gameObjects.remove(gameObjects.get(i));
+		 	}
+		}
 }
