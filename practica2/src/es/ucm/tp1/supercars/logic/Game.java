@@ -117,6 +117,8 @@ public class Game {
 			return container.getStringAtPos(x + cycle, y);
 	}
 	
+	// Getters and setters
+	
 	public int distanceToGoal() {
 		return distance;
 	}
@@ -165,6 +167,10 @@ public class Game {
 	public long getRecord() {
 		// TODO will be the new record, in this case its the elapsed time
 		return elapsedTime;
+	}
+
+	public Collider getObjectInPosition(int x, int y) {
+		return container.getObjectInPosition(x, y);
 	}
 	
 	

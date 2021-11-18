@@ -4,7 +4,7 @@ import es.ucm.tp1.supercars.logic.gameobjects.Player;
 
 public interface Collider {
 
-	boolean doCollision();
+	default boolean doCollision() {return false;};
 
 	boolean receiveCollision(Player player);
 

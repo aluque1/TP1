@@ -7,23 +7,24 @@ public class Obstacle extends GameObject{
 	public static final String INFO = "[Obstacle] hits car";
 	private static int numOfObstacles = 0;
 	private static final String SPRITE = "░";
+	private static final int HP = 1;
 	
 	public Obstacle(Game game, int x, int randomLane){
 		super(game, x, randomLane);
+		this.hp = HP;
 		symbol = SPRITE;
-		numOfObstacles++;
 	}
 
 	@Override
 	public boolean receiveCollision(Player player) {
-		// TODO Auto-generated method stub
-		return false;
+		player.decreaseHP();
+		this.hp--;
+		return true;
 	}
 
 	@Override
 	public void onEnter() {
-		// TODO Auto-generated method stub
-		
+		numOfObstacles++;
 	}
 
 	@Override
@@ -36,12 +37,6 @@ public class Obstacle extends GameObject{
 	public void onDelete() {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public boolean doCollision() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	public static int getObstaclesCount() {

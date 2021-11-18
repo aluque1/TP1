@@ -3,6 +3,8 @@ package es.ucm.tp1.supercars.logic.gameobjects;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.ucm.tp1.supercars.logic.Collider;
+
 public class GameObjectContainer {
 	
 	private List<GameObject> gameObjects;
@@ -14,6 +16,9 @@ public class GameObjectContainer {
 	public void update() {
 		for (GameObject obj : gameObjects) {
 			 	obj.update();
+			 	if(!obj.isAlive()) {
+			 		gameObjects.remove(obj);
+			 	}
 			}
 	}
 
@@ -48,6 +53,19 @@ public class GameObjectContainer {
 		}
 		return symbol;
 	}
-	
-	
+
+	public Collider getObjectInPosition(int x, int y) {
+		int i = 0;
+		boolean encontrado = false;
+		Collider obj = null;
+		
+		while (i < gameObjects.size() && !encontrado) {
+			if (gameObjects.get(i).isInPosition(x, y)) {
+				obj = gameObjects.get(i);
+				encontrado = true;
+			}
+			i++;
+		}
+		return obj;
+	}
 }

@@ -10,6 +10,7 @@ public abstract class GameObject implements Collider {
 	protected Game game;
 
 	protected String symbol;
+	protected int hp;
 
 	public GameObject(Game game, int x, int y) {
 		this.x = x;
@@ -43,7 +44,7 @@ public abstract class GameObject implements Collider {
 	}
 
 	public boolean isAlive() {
-		return true;
+		return hp > 0;
 	}
 
 	public abstract void onEnter();
