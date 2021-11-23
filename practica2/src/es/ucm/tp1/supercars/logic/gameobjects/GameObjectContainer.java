@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.ucm.tp1.supercars.logic.Collider;
+import es.ucm.tp1.supercars.logic.Game;
 
 public class GameObjectContainer {
 	
 	private List<GameObject> gameObjects;
+	Game game;
 	
-	public GameObjectContainer() {
+	public GameObjectContainer(Game game) {
 		gameObjects = new ArrayList<>();
+		this.game = game;
 	}
 	
 	public void update() {
@@ -34,6 +37,25 @@ public class GameObjectContainer {
 			i++;
 		}
 		return empty;
+	}
+	
+	private int getIndexOfPos(int x, int y) {
+		// TODO si no da tiempo, mirar si hoy otra manera
+		
+		int i = 0;
+		boolean found = false;
+		
+		while (i < gameObjects.size() && found) {
+			found = gameObjects.get(i).isInPosition(x, y);
+			i++;
+		}
+		
+		if (found)
+			i -= 1;
+		else
+			i = - 1;
+		
+		return i;
 	}
 
 	public String getStringAtPos(int x, int y) {
@@ -67,11 +89,27 @@ public class GameObjectContainer {
 	}
 	
 	public void removeDead() {
-		// SI PETA ES POR ESTO
 		for(int i = 0; i < gameObjects.size(); i++)
 		 	if(!gameObjects.get(i).isAlive()) {
 		 		gameObjects.get(i).onDelete();
 		 		gameObjects.remove(gameObjects.get(i));
 		 	}
 		}
+
+	public void clearContainer() {
+		gameObjects.clear();
+	}
+
+	public void recieveWave() {
+		// TODO VER SI VA MAL QUE PUEDE SER POR ESTO 
+		int initialPos = game.getPlayerX() + game.getVisibility(); 
+		for(int i = initialPos; i > game.getPlayerX(); i--) {
+			for(int j = 0; j < game.getRoadWidth(); j++) {
+				if(isPosEmpty(i + 1,j))
+					gameObjects.get(getIndexOfPos(i, j)).reciveWave();
+			}
+		}
+	}
+
+
 }

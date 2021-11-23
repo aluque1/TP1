@@ -28,19 +28,19 @@ public class Player extends GameObject{
 
 	@Override
 	public boolean receiveCollision(Player player) {
-		// Aun no
+		// Aun no, se va a escribir cuando tengamos el truck y el pedestrian
 		return false;
 	}
 
-	@Override
-	public void onEnter() {
-		coinsCollected = 0;
-		this.hp = HP;
-
-	}
+	
 
 	public void recieveCoin(int value) {
 		coinsCollected = getCoinsCollected() + value;
+	}
+	
+	public void recieveTurbo() {
+		x += 3;
+		doCollision();
 	}
 
 	public boolean moveUp() {
@@ -57,6 +57,7 @@ public class Player extends GameObject{
 		int futurePos = y + 1;
 		if(game.isWithinBounds(futurePos)) {
 			y = futurePos;
+			
 			return true;
 		}
 		else
@@ -67,6 +68,12 @@ public class Player extends GameObject{
 	public void update() {
 		x++;
 		doCollision();
+	}
+	
+	@Override
+	public void onEnter() {
+		coinsCollected = 0;
+		this.hp = HP;
 
 	}
 
@@ -88,6 +95,8 @@ public class Player extends GameObject{
 		else
 			return "@";
 	}
+
+	
 
 
 }

@@ -53,5 +53,8 @@ public abstract class GameObject implements Collider {
 
 	public abstract void onDelete();
 
-	// TODO add your code ------------------------
+	
+	public void reciveWave() {
+		x++;
+	}
 }

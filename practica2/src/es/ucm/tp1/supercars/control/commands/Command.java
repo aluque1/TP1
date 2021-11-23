@@ -17,7 +17,9 @@ public abstract class Command {
 		new ExitCommand(),
 		new ResetCommand(),
 		new TestCommand(),
-		new UpdateCommand()
+		new UpdateCommand(),
+		new ClearCommand(),
+		new WaveCommand()
 		// Add the new commands created here last one without a coma
 	};
 	/* @formatter:on */

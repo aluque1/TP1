@@ -8,7 +8,7 @@ public class Coin extends GameObject{
 	private static int numOfCoins = 0;
 	private static final String SPRITE = "¢";
 	private static final int value = 1;
-	private static final int HP = 1;
+	protected static final int HP = 1;
 
 	public Coin(Game game, int x, int randomLane) {
 		super(game, x, randomLane);
@@ -30,7 +30,7 @@ public class Coin extends GameObject{
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		//Empty as it doesn't move
 		
 	}
 

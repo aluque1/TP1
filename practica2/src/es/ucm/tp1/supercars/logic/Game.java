@@ -3,8 +3,7 @@ package es.ucm.tp1.supercars.logic;
 
 
 /** TODO :: Things we still have to do
- * 		·ResetCommand is still not done.
- * 		¿Es necesario que todos los metodos get de game sean publicos?
+ * 		· Grenade object and command is still to be done
  */
 
 import es.ucm.tp1.supercars.logic.gameobjects.GameObjectContainer;
@@ -17,6 +16,10 @@ import es.ucm.tp1.supercars.logic.gameobjects.GameObject;
 
 public class Game {
 
+	// Constants ----------------------------------------------
+	private static final int WAVE_PRICE = 5;
+	
+	
 	Player player;
 	GameObjectContainer container;
 	Level level;
@@ -41,7 +44,7 @@ public class Game {
 		this.seed = seed;
 		this.level = level;
 		rand = new Random(this.seed);
-		container = new GameObjectContainer();
+		container = new GameObjectContainer(this);
 		GameObjectGenerator.generateGameObjects(this, level);
 		player = new Player(this, 0, getRoadWidth()/2);
 		// initialisation of description attributes
@@ -52,12 +55,6 @@ public class Game {
 		
 	}
 	
-	public void reset(String[] params) {
-		if(params.length == 0)
-			init(seed, level);
-		else
-			init(Long.parseLong(params[0]), Level.valueOfIgnoreCase(params[1]));
-	}
 	
 	
 	public boolean isFinished() {
@@ -79,7 +76,7 @@ public class Game {
 	public boolean isWithinBounds(int row) {
 		return (row < getRoadWidth() && row >= 0);
 	}
-	// Command calling methods -------------------------------------------
+	// Command calling methods -----------------------------------------------------------------
 	
 	public void update() {
 		container.update();
@@ -90,7 +87,30 @@ public class Game {
 		
 		elapsedTime = System.currentTimeMillis() - initialTime;
 	}
+	
+	public void clearContainer() {
+		container.clearContainer();
+	}
 
+	public void reset(String[] params) {
+		if(params.length == 0)
+			init(seed, level);
+		else
+			init(Long.parseLong(params[0]), Level.valueOfIgnoreCase(params[1]));
+	}
+	
+	public boolean doWaveAttack() {
+		boolean couldPerform = false;
+		if(player.getCoinsCollected() > WAVE_PRICE) {
+			couldPerform = true;
+			container.recieveWave();
+		} 
+		else
+			System.out.println("Not enough coins to perform this action,");
+		
+		return couldPerform;
+	}
+	
 	// Game object generation --------------------------------------------
 	public int getRandomLane() {
 		return rand.nextInt(this.getRoadWidth());
@@ -112,7 +132,6 @@ public class Game {
 	public boolean moveDown() {
 		return player.moveDown();
 	}
-	// Getters and Setters ------------------------------------------------
 	
 	// GamePrinter methods ------------------------------------------------
 	public String positionToString(int x, int y) {
@@ -125,7 +144,7 @@ public class Game {
 			return container.getStringAtPos(x + player.getX(), y);
 	}
 	
-	// Getters and setters
+	// Getters and setters ------------------------------------------------
 	
 	public int distanceToGoal() {
 		return distance;
@@ -178,8 +197,9 @@ public class Game {
 
 	public Collider getObjectInPosition(int x, int y) {
 		return container.getObjectInPosition(x, y);
+	}	
+	
+	public int getPlayerX() {
+		return player.getX();
 	}
-
-	
-	
 }
