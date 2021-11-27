@@ -18,15 +18,15 @@ public class MoveUpCommand extends Command{
 
 	@Override
 	public boolean execute(Game game) {
+		game.checkCollision();
 		if(game.moveUp()) {
-			game.update();
-			return true;
+			game.moveForward();
+			game.checkCollision();
 		}
-			
 		else {
-			System.out.println("[ERROR] : You are at the edge of the road, you can't move up.");
-			return false;
+			game.update();
 		}
+		return true;
 			
 	}
 

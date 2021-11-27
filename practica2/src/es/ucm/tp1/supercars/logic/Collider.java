@@ -7,5 +7,8 @@ public interface Collider {
 	default boolean doCollision() {return false;};
 
 	boolean receiveCollision(Player player);
+	
+	default boolean receiveShoot() {return false;};
+
 
 }

@@ -32,47 +32,51 @@ public class Player extends GameObject{
 		return false;
 	}
 
-	
-
 	public void recieveCoin(int value) {
 		coinsCollected = getCoinsCollected() + value;
 	}
 	
+	public void spendCoins(int price) {
+		coinsCollected -= price;
+	}
 	public void recieveTurbo() {
 		x += 3;
-		doCollision();
 	}
 
+	public void moveForward() {
+		x++;
+	}
+	
 	public boolean moveUp() {
+		boolean canMove = false;
 		int futurePos = y - 1;
 		if(game.isWithinBounds(futurePos)) {
 			y = futurePos;
-			return true;
+			canMove = true;
 		}
-		else
-			return false;
+		return canMove;
 	}
 
 	public boolean moveDown() {
+		boolean canMove = false;
 		int futurePos = y + 1;
 		if(game.isWithinBounds(futurePos)) {
 			y = futurePos;
-			
-			return true;
+			canMove = true;
 		}
-		else
-			return false;
+		return canMove;
 	}
 
 	@Override
 	public void update() {
-		x++;
+		if(!doCollision())
+			moveForward();
 		doCollision();
 	}
 	
 	@Override
 	public void onEnter() {
-		coinsCollected = 0;
+		coinsCollected = 5;
 		this.hp = HP;
 
 	}
@@ -80,7 +84,6 @@ public class Player extends GameObject{
 	@Override
 	public void onDelete() {
 		// empty because never gets deleted.
-
 	}
 
 	public int getCoinsCollected() {
@@ -95,8 +98,5 @@ public class Player extends GameObject{
 		else
 			return "@";
 	}
-
-	
-
 
 }

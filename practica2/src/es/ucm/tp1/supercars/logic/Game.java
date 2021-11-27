@@ -1,23 +1,28 @@
 package es.ucm.tp1.supercars.logic;
 
 
-
 /** TODO :: Things we still have to do
+ * 		· Implement shot in the container section of the code
  * 		· Grenade object and command is still to be done
+ * 		· Truck
+ * 		· Pedestrian
+ * 		· ThunderAction
+ * 		· CheatCommand
  */
 
 import es.ucm.tp1.supercars.logic.gameobjects.GameObjectContainer;
 import es.ucm.tp1.supercars.logic.gameobjects.Player;
 
+import java.nio.Buffer;
 import java.util.Random;
 
 import es.ucm.tp1.supercars.control.Level;
 import es.ucm.tp1.supercars.logic.gameobjects.GameObject;
 
-public class Game {
+public class Game{
 
 	// Constants ----------------------------------------------
-	private static final int WAVE_PRICE = 5;
+	private static final String FINISH_LINE = "¦";
 	
 	
 	Player player;
@@ -83,7 +88,7 @@ public class Game {
 		player.update();
 		container.removeDead();
 		cycle++;
-		distance--;
+		distance = getRoadLength() - player.getX();
 		
 		elapsedTime = System.currentTimeMillis() - initialTime;
 	}
@@ -98,19 +103,7 @@ public class Game {
 		else
 			init(Long.parseLong(params[0]), Level.valueOfIgnoreCase(params[1]));
 	}
-	
-	public boolean doWaveAttack() {
-		boolean couldPerform = false;
-		if(player.getCoinsCollected() > WAVE_PRICE) {
-			couldPerform = true;
-			container.recieveWave();
-		} 
-		else
-			System.out.println("Not enough coins to perform this action,");
-		
-		return couldPerform;
-	}
-	
+
 	// Game object generation --------------------------------------------
 	public int getRandomLane() {
 		return rand.nextInt(this.getRoadWidth());
@@ -133,15 +126,23 @@ public class Game {
 		return player.moveDown();
 	}
 	
+	public void moveForward() {
+		player.moveForward();
+	}
+	
+	public boolean checkCollision() {
+		return player.doCollision();
+	}
 	// GamePrinter methods ------------------------------------------------
 	public String positionToString(int x, int y) {
-		
+		StringBuilder str = new StringBuilder();
 		if(player.isInPosition(x + player.getX(), y))
-			return player.toString();
+			str.append(player.toString());
 		else if(x + player.getX() == level.getLength() - 1)
-			return "¦";
-		else
-			return container.getStringAtPos(x + player.getX(), y);
+			str.append(FINISH_LINE);
+		str.append(" ").append(container.getStringAtPos(x + player.getX(), y));
+		
+		return str.toString();
 	}
 	
 	// Getters and setters ------------------------------------------------
@@ -201,5 +202,17 @@ public class Game {
 	
 	public int getPlayerX() {
 		return player.getX();
+	}
+	
+	public int getPlayerCoins() {
+		return player.getCoinsCollected();
+	}
+	
+	public void spendCoins(int price) {
+		player.spendCoins(price);
+	}
+	
+	public void recieveWave() {
+		container.recieveWave();
 	}
 }

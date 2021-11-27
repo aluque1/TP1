@@ -19,13 +19,15 @@ public class GameObjectContainer {
 	public void update() {
 		for (GameObject obj : gameObjects) {
 			 	obj.update();
-			}
+		}
 	}
 
 	public void addObject(GameObject go) {
-		if (this.isPosEmpty(go.getX(), go.getY()))
-		gameObjects.add(go);
-		go.onEnter();
+		if (this.isPosEmpty(go.getX(), go.getY())) {
+			gameObjects.add(go);
+			go.onEnter();
+		}
+		
 	}
 	
 	private boolean isPosEmpty(int x, int y){
@@ -45,15 +47,10 @@ public class GameObjectContainer {
 		int i = 0;
 		boolean found = false;
 		
-		while (i < gameObjects.size() && found) {
+		while (i < gameObjects.size() && !found) {
 			found = gameObjects.get(i).isInPosition(x, y);
 			i++;
 		}
-		
-		if (found)
-			i -= 1;
-		else
-			i = - 1;
 		
 		return i;
 	}
@@ -97,16 +94,22 @@ public class GameObjectContainer {
 		}
 
 	public void clearContainer() {
+		for (GameObject obj : gameObjects) {
+		 	obj.onDelete();
+		}
 		gameObjects.clear();
 	}
 
 	public void recieveWave() {
 		// TODO VER SI VA MAL QUE PUEDE SER POR ESTO 
-		int initialPos = game.getPlayerX() + game.getVisibility(); 
-		for(int i = initialPos; i > game.getPlayerX(); i--) {
+		int initialPos = game.getPlayerX() + game.getVisibility() - 1; 
+		for(int i = initialPos; i >= game.getPlayerX(); i--) {
 			for(int j = 0; j < game.getRoadWidth(); j++) {
-				if(isPosEmpty(i + 1,j))
-					gameObjects.get(getIndexOfPos(i, j)).reciveWave();
+				if(isPosEmpty(i + 1,j)) {
+					int index = getIndexOfPos(i, j);
+					if(index <= gameObjects.size())
+						gameObjects.get(index - 1).reciveWave();
+				}
 			}
 		}
 	}

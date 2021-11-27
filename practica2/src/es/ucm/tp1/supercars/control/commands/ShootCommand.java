@@ -4,27 +4,27 @@ import es.ucm.tp1.supercars.control.Buyable;
 import es.ucm.tp1.supercars.logic.Game;
 import es.ucm.tp1.supercars.logic.InstantAction;
 
-public class WaveCommand extends Command implements InstantAction, Buyable{
+public class ShootCommand extends Command implements InstantAction, Buyable{
 
-	private static final int WAVE_PRICE = 5;
-	
-	private static final String NAME = "wave";
+	static final int SHOT_PRICE = 1;
 
-	private static final String DETAILS = "[w]ave";
+	private static final String NAME = "shoot";
 
-	private static final String SHORTCUT = "w";
+	private static final String DETAILS = "[s]hoot";
 
-	private static final String HELP = "Moves all the visible objects on the road back by one cell for 5 coins.";
+	private static final String SHORTCUT = "s";
 
-	public WaveCommand() {
+	private static final String HELP = "Clears the road from all obstacles.";
+
+	public ShootCommand() {
 		super(NAME, SHORTCUT, DETAILS, HELP);
 	}
-	
+
 	@Override
 	public boolean execute(Game game) {
 		boolean executed = false;
 		if(buy(game)) {
-			executeWave(game);
+			executeShot(game);
 			executed = true;
 		}
 		if(!executed)
@@ -35,6 +35,7 @@ public class WaveCommand extends Command implements InstantAction, Buyable{
 	// Buyable interface implementation ----------------
 	@Override
 	public int cost() {
-		return WAVE_PRICE;
+		return SHOT_PRICE;
 	}
 }
+

@@ -5,8 +5,8 @@ import es.ucm.tp1.supercars.logic.Game;
 public class ResetCommand extends Command{
 	
 	private static final String NAME = "reset";
-
-	private static final String DETAILS = "[r]eset <seed> <level> (optional)";
+	
+	private static final String DETAILS = "[r]eset [<level> <seed>]";
 
 	private static final String SHORTCUT = "r";
 

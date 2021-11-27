@@ -2,7 +2,7 @@ package es.ucm.tp1.supercars.control;
 
 public enum Level {
 
-	TEST(10, 3, 8, 0.5, 0), EASY(30, 3, 8, 0.5, 0.5), HARD(100, 5, 6, 0.7, 0.3);
+	TEST(10, 3, 8, 0.5, 0, 0), EASY(30, 3, 8, 0.5, 0.5, 0), HARD(100, 5, 6, 0.7, 0.3, 0), ADVANCED(100, 3, 8, 0.3, 0.3, 0.1);
 
 	private int length;
 
@@ -14,15 +14,16 @@ public enum Level {
 
 	private double obstacleFrequency;
 	
-	private boolean hasAdvancedObjects;
+	private double advObjFrequency;
 
-	private Level(int length, int width, int visibility, double obstacleFrequency, double coinFrequency) {
+
+	private Level(int length, int width, int visibility, double obstacleFrequency, double coinFrequency, double advObjFrequency) {
 		this.length = length;
 		this.width = width;
 		this.visibility = visibility;
 		this.obstacleFrequency = obstacleFrequency;
 		this.coinFrequency = coinFrequency;
-		this.hasAdvancedObjects = false;
+		this.advObjFrequency = advObjFrequency;
 	}
 
 	public static Level valueOfIgnoreCase(String inputString) {
@@ -78,7 +79,11 @@ public enum Level {
 	}
 
 	public boolean hasAdvancedObjects() {
-		return hasAdvancedObjects;
+		return advObjFrequency > 0;
+	}
+
+	public double advancedObjectsFrequency() {
+		return advObjFrequency;
 	}
 	
 }
