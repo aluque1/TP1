@@ -27,7 +27,6 @@ public class GameObjectContainer {
 			gameObjects.add(go);
 			go.onEnter();
 		}
-		
 	}
 	
 	private boolean isPosEmpty(int x, int y){
@@ -39,18 +38,6 @@ public class GameObjectContainer {
 			i++;
 		}
 		return empty;
-	}
-	
-	private int getIndexOfPos(int x, int y) {
-		int i = 0;
-		boolean found = false;
-		
-		while (i < gameObjects.size() && !found) {
-			found = gameObjects.get(i).isInPosition(x, y);
-			i++;
-		}
-		
-		return i;
 	}
 
 	public String getStringAtPos(int x, int y) {
@@ -88,6 +75,7 @@ public class GameObjectContainer {
 		 	if(!gameObjects.get(i).isAlive()) {
 		 		gameObjects.get(i).onDelete();
 		 		gameObjects.remove(gameObjects.get(i));
+		 		i--;
 		 	}
 		}
 
@@ -99,11 +87,11 @@ public class GameObjectContainer {
 	}
 
 	public void clearLastVisibleColumn() {
-		// TODO  deletes one object at a time for some reason.
-		int col = game.getPlayerX() + game.getVisibility() - 1; 
+		int col = game.getPlayerX() + game.getVisibility() - 1;
 		for(int i = 0; i < gameObjects.size(); i++)
-			if(gameObjects.get(i).colIs(col))
-				gameObjects.remove(gameObjects.get(i));
+			if(gameObjects.get(i).getX() == col)
+				gameObjects.get(i).instaKill();
+		removeDead();
 	}
 	
 	public void recieveWave() {
@@ -111,19 +99,32 @@ public class GameObjectContainer {
 		for(int i = initialPos; i >= game.getPlayerX(); i--) {
 			for(int j = 0; j < game.getRoadWidth(); j++) {
 				if(isPosEmpty(i + 1,j)) {
-					int index = getIndexOfPos(i, j);
-					if(index <= gameObjects.size())
-						gameObjects.get(index - 1).reciveWave();
+					Collider go = getObjectInPosition(i, j);
+					if(go != null)
+						getObjectInPosition(i, j).receiveWave();
 				}
 			}
 		}
 	}
 
+	public void recieveShot(int y) {
+		boolean hit = false;
+		int i = game.getPlayerX() + 1;
+		while(y < game.getVisibility() - 1 || !hit) {
+			Collider go = getObjectInPosition(i, y);
+			if(go != null) {
+				getObjectInPosition(i, y).receiveShot();
+				hit = true;
+			}
+			i++;
+		}
+	}
+	
 	public void explode(int x, int y) {
 		for(int i = -1; i < 2; i++) {
 			for(int j = -1; j < 2; j++){
 				if(game.isWithinVisibility(x + i, y + j))
-					getObjectInPosition(x + i, y + j).recieveExplosion(); // TODO MAYBE CHANGE THIS TO RECIEVE SHOT
+					getObjectInPosition(x + i, y + j).receiveShot();
 			}
 		}
 	}

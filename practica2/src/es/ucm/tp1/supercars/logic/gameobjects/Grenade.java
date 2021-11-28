@@ -1,9 +1,8 @@
 package es.ucm.tp1.supercars.logic.gameobjects;
 
 import es.ucm.tp1.supercars.logic.Game;
-import es.ucm.tp1.supercars.logic.InstantAction;
 
-public class Grenade extends GameObject implements InstantAction{
+public class Grenade extends GameObject{
 
 	public static final String INFO = "[GRENADE] Explodes in 3 cycles, harming everyone around";
 	private static final String SPRITE = "ð";
@@ -30,13 +29,18 @@ public class Grenade extends GameObject implements InstantAction{
 	public void update() {
 		if(isAlive()) 
 			hp--;
-		else 
-			explosionAction(game, x, y); 
+		//else 
+			//explosionAction(game, x, y); 
 	}
 
 	@Override
 	public void onDelete() {
 		// Does not do anything
+	}
+	
+	@Override
+	public boolean receiveShot() {
+		return false;
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package es.ucm.tp1.supercars.control.commands;
 
 import es.ucm.tp1.supercars.logic.Game;
+import es.ucm.tp1.supercars.logic.GameObjectGenerator;
 
 public class CheatCommand extends Command{
 
@@ -12,7 +13,7 @@ public class CheatCommand extends Command{
 
 	private static final String HELP = "Removes all elements of last visible column, and adds an Advanced Object";
 
-	private String param;
+	private int param;
 	
 	public CheatCommand() {
 		super(NAME, SHORTCUT, DETAILS, HELP);
@@ -21,18 +22,24 @@ public class CheatCommand extends Command{
 	@Override
 	public boolean execute(Game game) {
 		game.clearLastVisibleColumn();
-		// añadimos el objeto
+		int col = game.getPlayerX() + game.getVisibility() - 1;
+		GameObjectGenerator.forceAdvanceObject(game, param, col);
 		return true;
+	}
+	
+	protected boolean matchCommandName(String name) {
+		return NAME.equalsIgnoreCase(name) || name == String.valueOf(name);
 	}
 	
 	@Override
 	protected Command parse(String[] words) {
 		Command command = null;
 		if (matchCommandName(words[0])) {
-			if (words.length > 2 && words.length < 1) {
+			if ((words.length > 2 && words.length < 1) || (words.length == 1 && words[0].equalsIgnoreCase(NAME))) {
 				System.out.format("[ERROR]: Command %s: %s%n%n", NAME, INCORRECT_NUMBER_OF_ARGS_MSG);
 			} else {
-				param = words[0];
+				param = Integer.parseInt(words[0]);
+				if(param > 0 && param < 6)
 				command = this;
 			}
 		}

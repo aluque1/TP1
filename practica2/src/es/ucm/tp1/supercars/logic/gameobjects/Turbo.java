@@ -32,6 +32,11 @@ public class Turbo extends GameObject{
 		// Does not do anything
 		
 	}
+	
+	@Override
+	public boolean receiveShot() {
+		return false;
+	}
 
 	@Override
 	public void onDelete() {

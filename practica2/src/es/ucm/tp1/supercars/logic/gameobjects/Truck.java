@@ -29,7 +29,7 @@ public class Truck extends GameObject{
 		player.decreaseHP();
 		return true;
 	}
-
+	
 	@Override
 	public void onEnter() {
 		// Empty

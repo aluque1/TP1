@@ -36,7 +36,12 @@ public class Coin extends GameObject{
 		//Empty as it doesn't move
 		
 	}
-
+	
+	@Override
+	public boolean receiveShot() {
+		return false;
+	}
+	
 	@Override
 	public void onDelete() {
 		numOfCoins--;

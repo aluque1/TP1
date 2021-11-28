@@ -9,7 +9,7 @@ public class GameObjectGenerator {
 		for (int x = game.getVisibility() / 2; x < game.getRoadLength() - 1; x++) {
 			game.tryToAddObject(new Obstacle(game, x, game.getRandomLane()), level.getObstacleFrequency());
 			game.tryToAddObject(new Coin(game, x, game.getRandomLane()), level.getCoinFrequency());
-			if (level . hasAdvancedObjects()) {
+			if (level.hasAdvancedObjects()) {
 				game.tryToAddObject(new Wall(game, x, game.getRandomLane()), level.advancedObjectsFrequency());
 				game.tryToAddObject(new Turbo(game, x, game.getRandomLane()), level.advancedObjectsFrequency());
 				if (!SuperCoin.hasSuperCoin()) {
@@ -32,6 +32,7 @@ public class GameObjectGenerator {
 			//game.execute(new ThunderAction());
 		}
 	}
+	
 	public static void forceAdvanceObject(Game game, int id, int x) {
 		GameObject o = null;
 		switch (id) {

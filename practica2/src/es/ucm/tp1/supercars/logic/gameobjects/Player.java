@@ -39,6 +39,11 @@ public class Player extends GameObject{
 	public void spendCoins(int price) {
 		coinsCollected -= price;
 	}
+
+	public void giveCoins(int coins) {
+		coinsCollected += coins;
+	}
+	
 	public void recieveTurbo() {
 		x += 3;
 	}
@@ -84,6 +89,11 @@ public class Player extends GameObject{
 	@Override
 	public void onDelete() {
 		// empty because never gets deleted.
+	}
+	
+	@Override
+	public boolean receiveWave() {
+		return false;
 	}
 
 	public int getCoinsCollected() {

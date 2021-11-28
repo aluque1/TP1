@@ -7,7 +7,7 @@ public class Pedestrian extends GameObject{
 	public static final String INFO = "[PEDESTRIAN] person crossing the road up and down[PEDESTRIAN] person crossing the road up and down";
 	private static final String SPRITE = "☺";
 	private static final int HP = 1;
-	private boolean abajo; // true es para abajo, false es para arriba
+	private boolean abajo; // true is up, false is down
 	
 	public Pedestrian(Game game, int x, int y) {
 		super(game, x, y);
@@ -30,7 +30,18 @@ public class Pedestrian extends GameObject{
 	}
 
 	@Override
+	public boolean receiveShot() {
+		this.hp--;
+		game.playerLoseCoins();
+		return true;
+	}
+	
+	@Override
 	public void update() {
+		if(abajo)
+			y++;
+		else
+			y--;
 		// programar movimiento, lo unico que hace fatla es subir o bajar, comprobar si esta en el borde y cambiar de direccion en caso afirmativo
 		
 	}

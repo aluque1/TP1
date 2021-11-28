@@ -5,6 +5,7 @@ import es.ucm.tp1.supercars.logic.Game;
 public class Wall extends Obstacle{
 	
 	private static final int HP = 3;
+	private static final int VALUE = 5;
 	public static final String INFO = "[WALL] hard obstacle";
 
 	public Wall(Game game, int x, int randomLane) {
@@ -14,7 +15,7 @@ public class Wall extends Obstacle{
 	@Override
 	public void onDelete() {
 		numOfObstacles--;
-		// TODO, once the wall dies we need to give 5 coins to the player
+		game.givePlayerCoins(VALUE);
 	}
 	
 	@Override

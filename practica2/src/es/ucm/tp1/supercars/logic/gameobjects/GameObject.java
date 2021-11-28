@@ -54,16 +54,24 @@ public abstract class GameObject implements Collider {
 
 	public abstract void onDelete();
 	
-	public void reciveWave() {
-		x++;
-	}
-
-	public boolean colIs(int col) {
-		return x == col;
-	}
-	
 	public void decreaseHP() {
 		hp--;
+	}
+
+	protected void instaKill() {
+		hp = 0;
+	}
+	
+	@Override
+	public boolean receiveWave() {
+		x++;
+		return true;
+	}
+	
+	@Override
+	public boolean receiveShot() {
+		this.hp--;
+		return true;
 	}
 
 }

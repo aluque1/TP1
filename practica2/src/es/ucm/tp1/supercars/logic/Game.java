@@ -11,8 +11,9 @@ package es.ucm.tp1.supercars.logic;
  */
 
 import es.ucm.tp1.supercars.logic.gameobjects.GameObjectContainer;
-import es.ucm.tp1.supercars.logic.gameobjects.Grenade;
 import es.ucm.tp1.supercars.logic.gameobjects.Player;
+import es.ucm.tp1.supercars.logic.instantAction.InstantAction;
+
 import java.util.Random;
 import es.ucm.tp1.supercars.control.Level;
 import es.ucm.tp1.supercars.logic.gameobjects.GameObject;
@@ -54,10 +55,11 @@ public class Game{
 		distance = getRoadLength();
 		cycle = 0;
 		elapsedTime = 0;
-		initialTime = System.currentTimeMillis();
-		
 	}
 	
+	public void execute(InstantAction action) {
+		action.execute(this);
+	}
 	
 	// Game state methods ------------------------------------------------------------
 	public boolean isFinished() {
@@ -79,6 +81,7 @@ public class Game{
 	public boolean isAtBottomOfRoad(int row) {
 		return row < getRoadWidth();
 	}
+	
 	// Command calling methods -----------------------------------------------------------------
 	
 	public void update() {
@@ -87,8 +90,10 @@ public class Game{
 		container.removeDead();
 		cycle++;
 		distance = getRoadLength() - getPlayerX();
-		
-		elapsedTime = System.currentTimeMillis() - initialTime;
+		if(cycle == 1)
+			initialTime = System.currentTimeMillis();
+		else
+			elapsedTime = System.currentTimeMillis() - initialTime;
 	}
 	
 	public void reset(String[] params) {
@@ -106,6 +111,10 @@ public class Game{
 		container.recieveWave();
 	}
 
+	public void recieveShot() {
+		container.recieveShot(getPlayerY());
+	}
+	
 	public void explode(int x, int y) {
 		container.explode(x, y);
 		
@@ -150,6 +159,15 @@ public class Game{
 	
 	public boolean checkCollision() {
 		return player.doCollision();
+	}
+	
+	public void givePlayerCoins(int coins) {
+		player.giveCoins(coins);
+	}
+	
+	public void playerLoseCoins() {
+		player.loseCoins();
+		
 	}
 	
 	// GamePrinter methods ------------------------------------------------
@@ -223,6 +241,10 @@ public class Game{
 		return player.getX();
 	}
 	
+	public int getPlayerY() {
+		return player.getY();
+	}
+	
 	public int getPlayerCoins() {
 		return player.getCoinsCollected();
 	}
@@ -241,5 +263,5 @@ public class Game{
 	
 	public int getRandomLane() {
 		return rand.nextInt(this.getRoadWidth());
-	}	
+	}
 }

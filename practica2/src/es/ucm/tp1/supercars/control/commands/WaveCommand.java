@@ -2,9 +2,9 @@ package es.ucm.tp1.supercars.control.commands;
 
 import es.ucm.tp1.supercars.control.Buyable;
 import es.ucm.tp1.supercars.logic.Game;
-import es.ucm.tp1.supercars.logic.InstantAction;
+import es.ucm.tp1.supercars.logic.instantAction.WaveAction;
 
-public class WaveCommand extends Command implements InstantAction, Buyable{
+public class WaveCommand extends Command implements Buyable{
 
 	private static final int WAVE_PRICE = 5;
 	
@@ -24,7 +24,7 @@ public class WaveCommand extends Command implements InstantAction, Buyable{
 	public boolean execute(Game game) {
 		boolean executed = false;
 		if(buy(game)) {
-			executeWave(game);
+			game.execute(new WaveAction());
 			executed = true;
 		}
 		if(!executed)

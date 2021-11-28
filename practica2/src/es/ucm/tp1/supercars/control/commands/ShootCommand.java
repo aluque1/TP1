@@ -2,9 +2,9 @@ package es.ucm.tp1.supercars.control.commands;
 
 import es.ucm.tp1.supercars.control.Buyable;
 import es.ucm.tp1.supercars.logic.Game;
-import es.ucm.tp1.supercars.logic.InstantAction;
+import es.ucm.tp1.supercars.logic.instantAction.ShotAction;
 
-public class ShootCommand extends Command implements InstantAction, Buyable{
+public class ShootCommand extends Command implements Buyable{
 
 	static final int SHOT_PRICE = 1;
 
@@ -24,7 +24,7 @@ public class ShootCommand extends Command implements InstantAction, Buyable{
 	public boolean execute(Game game) {
 		boolean executed = false;
 		if(buy(game)) {
-			executeShot(game);
+			game.execute(new ShotAction());
 			executed = true;
 		}
 		if(!executed)

@@ -20,12 +20,6 @@ public class Obstacle extends GameObject{
 		player.decreaseHP();
 		return true;
 	}
-
-	@Override
-	public boolean receiveShoot() {
-		this.hp--;
-		return false;
-	}
 	
 	@Override
 	public void onEnter() {
@@ -37,7 +31,7 @@ public class Obstacle extends GameObject{
 		// Doesn't do anything
 		
 	}
-
+	
 	@Override
 	public void onDelete() {
 		numOfObstacles--;
