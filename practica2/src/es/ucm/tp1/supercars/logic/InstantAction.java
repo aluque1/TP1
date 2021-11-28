@@ -11,5 +11,9 @@ public interface InstantAction {
 	default void executeWave(Game game) {
 		game.recieveWave();
 	}
+	
+	default void explosionAction(Game game, int x, int y) {
+		game.explode(x, y);
+	}
 }
 

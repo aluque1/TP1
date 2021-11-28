@@ -14,7 +14,7 @@ public class ShootCommand extends Command implements InstantAction, Buyable{
 
 	private static final String SHORTCUT = "s";
 
-	private static final String HELP = "Clears the road from all obstacles.";
+	private static final String HELP = "shoot bullet";
 
 	public ShootCommand() {
 		super(NAME, SHORTCUT, DETAILS, HELP);

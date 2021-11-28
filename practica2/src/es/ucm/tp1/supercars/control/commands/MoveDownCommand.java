@@ -6,7 +6,7 @@ public class MoveDownCommand extends Command{
 	
 	private static final String NAME = "move down";
 
-	private static final String DETAILS = "[a] Move up";
+	private static final String DETAILS = "[a]: go down";
 
 	private static final String SHORTCUT = "a";
 

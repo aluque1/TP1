@@ -42,8 +42,6 @@ public class GameObjectContainer {
 	}
 	
 	private int getIndexOfPos(int x, int y) {
-		// TODO si no da tiempo, mirar si hoy otra manera
-		
 		int i = 0;
 		boolean found = false;
 		
@@ -100,8 +98,15 @@ public class GameObjectContainer {
 		gameObjects.clear();
 	}
 
+	public void clearLastVisibleColumn() {
+		// TODO  deletes one object at a time for some reason.
+		int col = game.getPlayerX() + game.getVisibility() - 1; 
+		for(int i = 0; i < gameObjects.size(); i++)
+			if(gameObjects.get(i).colIs(col))
+				gameObjects.remove(gameObjects.get(i));
+	}
+	
 	public void recieveWave() {
-		// TODO VER SI VA MAL QUE PUEDE SER POR ESTO 
 		int initialPos = game.getPlayerX() + game.getVisibility() - 1; 
 		for(int i = initialPos; i >= game.getPlayerX(); i--) {
 			for(int j = 0; j < game.getRoadWidth(); j++) {
@@ -110,6 +115,15 @@ public class GameObjectContainer {
 					if(index <= gameObjects.size())
 						gameObjects.get(index - 1).reciveWave();
 				}
+			}
+		}
+	}
+
+	public void explode(int x, int y) {
+		for(int i = -1; i < 2; i++) {
+			for(int j = -1; j < 2; j++){
+				if(game.isWithinVisibility(x + i, y + j))
+					getObjectInPosition(x + i, y + j).recieveExplosion(); // TODO MAYBE CHANGE THIS TO RECIEVE SHOT
 			}
 		}
 	}

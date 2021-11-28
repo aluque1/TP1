@@ -11,11 +11,9 @@ package es.ucm.tp1.supercars.logic;
  */
 
 import es.ucm.tp1.supercars.logic.gameobjects.GameObjectContainer;
+import es.ucm.tp1.supercars.logic.gameobjects.Grenade;
 import es.ucm.tp1.supercars.logic.gameobjects.Player;
-
-import java.nio.Buffer;
 import java.util.Random;
-
 import es.ucm.tp1.supercars.control.Level;
 import es.ucm.tp1.supercars.logic.gameobjects.GameObject;
 
@@ -61,25 +59,25 @@ public class Game{
 	}
 	
 	
-	
+	// Game state methods ------------------------------------------------------------
 	public boolean isFinished() {
 		return playerExit || hasArrived() || !player.isAlive();
 	}
 
-	public int getVisibility() {
-		return level.getVisibility();
-	}
-
-	public int getRoadLength() {
-		return level.getLength();
-	}
-
-	public int getRoadWidth() {
-		return level.getWidth();
-	}
-	
 	public boolean isWithinBounds(int row) {
 		return (row < getRoadWidth() && row >= 0);
+	}
+	
+	public boolean isWithinVisibility(int col, int row) {
+		return (row < getRoadWidth() && row >= 0) && (col >= getPlayerX() && col <= (getPlayerX() + getVisibility() - 1));
+	}
+	
+	public boolean isAtTopOfRoad(int row) {
+		return row == 0;
+	}
+	
+	public boolean isAtBottomOfRoad(int row) {
+		return row < getRoadWidth();
 	}
 	// Command calling methods -----------------------------------------------------------------
 	
@@ -88,15 +86,11 @@ public class Game{
 		player.update();
 		container.removeDead();
 		cycle++;
-		distance = getRoadLength() - player.getX();
+		distance = getRoadLength() - getPlayerX();
 		
 		elapsedTime = System.currentTimeMillis() - initialTime;
 	}
 	
-	public void clearContainer() {
-		container.clearContainer();
-	}
-
 	public void reset(String[] params) {
 		if(params.length == 0)
 			init(seed, level);
@@ -104,9 +98,27 @@ public class Game{
 			init(Long.parseLong(params[0]), Level.valueOfIgnoreCase(params[1]));
 	}
 
-	// Game object generation --------------------------------------------
-	public int getRandomLane() {
-		return rand.nextInt(this.getRoadWidth());
+	public void spendCoins(int price) {
+		player.spendCoins(price);
+	}
+	
+	public void recieveWave() {
+		container.recieveWave();
+	}
+
+	public void explode(int x, int y) {
+		container.explode(x, y);
+		
+	}
+	
+	public void placeGrenade(int x, int y) {
+		GameObjectGenerator.placeGrenade(this, x + getPlayerX(), y);
+		update();
+	}
+	
+	// Game object creation and deletion --------------------------------------------
+	public void clearContainer() {
+		container.clearContainer();
 	}
 
 	public void tryToAddObject(GameObject go, double frequency) {
@@ -114,8 +126,14 @@ public class Game{
 				container.addObject(go);
 			}
 	}
-			
 	
+	public void forceAddObject(GameObject o) {
+		container.addObject(o);
+	}
+	
+	public void clearLastVisibleColumn() {
+		container.clearLastVisibleColumn();
+	}
 	// Player interaction methods -----------------------------------------
 
 	public boolean moveUp() {
@@ -133,14 +151,15 @@ public class Game{
 	public boolean checkCollision() {
 		return player.doCollision();
 	}
+	
 	// GamePrinter methods ------------------------------------------------
 	public String positionToString(int x, int y) {
 		StringBuilder str = new StringBuilder();
-		if(player.isInPosition(x + player.getX(), y))
+		if(player.isInPosition(x + getPlayerX(), y))
 			str.append(player.toString());
-		else if(x + player.getX() == level.getLength() - 1)
+		else if(x + getPlayerX() == level.getLength() - 1)
 			str.append(FINISH_LINE);
-		str.append(" ").append(container.getStringAtPos(x + player.getX(), y));
+		str.append(" ").append(container.getStringAtPos(x + getPlayerX(), y));
 		
 		return str.toString();
 	}
@@ -208,11 +227,19 @@ public class Game{
 		return player.getCoinsCollected();
 	}
 	
-	public void spendCoins(int price) {
-		player.spendCoins(price);
+	public int getVisibility() {
+		return level.getVisibility();
+	}
+
+	public int getRoadLength() {
+		return level.getLength();
+	}
+
+	public int getRoadWidth() {
+		return level.getWidth();
 	}
 	
-	public void recieveWave() {
-		container.recieveWave();
-	}
+	public int getRandomLane() {
+		return rand.nextInt(this.getRoadWidth());
+	}	
 }

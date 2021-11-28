@@ -5,6 +5,7 @@ import es.ucm.tp1.supercars.logic.Game;
 public class Wall extends Obstacle{
 	
 	private static final int HP = 3;
+	public static final String INFO = "[WALL] hard obstacle";
 
 	public Wall(Game game, int x, int randomLane) {
 		super(game, x, randomLane);

@@ -24,11 +24,12 @@ public abstract class GameObject implements Collider {
 
 	@Override
 	public String toString() {
+		String sprite = "";
 		if (isAlive()) {
-			return getSymbol();
+			sprite = getSymbol();
 		}
 
-		return "";
+		return sprite;
 	}
 
 	public boolean isInPosition(int x, int y) {
@@ -57,5 +58,12 @@ public abstract class GameObject implements Collider {
 		x++;
 	}
 
+	public boolean colIs(int col) {
+		return x == col;
+	}
 	
+	public void decreaseHP() {
+		hp--;
+	}
+
 }

@@ -22,18 +22,18 @@ public class Player extends GameObject{
 		return false;
 	}
 
-	public void decreaseHP() {
-		hp--;
-	}
-
 	@Override
-	public boolean receiveCollision(Player player) {
-		// Aun no, se va a escribir cuando tengamos el truck y el pedestrian
-		return false;
+	public boolean receiveCollision(Truck truck) {
+		truck.decreaseHP();
+		return true;
 	}
 
 	public void recieveCoin(int value) {
 		coinsCollected = getCoinsCollected() + value;
+	}
+	
+	public void loseCoins() {
+		coinsCollected = 0;
 	}
 	
 	public void spendCoins(int price) {
@@ -92,11 +92,13 @@ public class Player extends GameObject{
 
 	@Override
 	public String toString() {
+		String sprite;
 		if (isAlive()) {
-			return ">";
+			sprite = ">";
 		}
 		else
-			return "@";
+			sprite = "@";
+		
+		return sprite;
 	}
-
 }

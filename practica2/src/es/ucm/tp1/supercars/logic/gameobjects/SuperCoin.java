@@ -4,7 +4,7 @@ import es.ucm.tp1.supercars.logic.Game;
 
 public class SuperCoin extends Coin{
 	
-	public static final String INFO = "[Super Coin] gives 1000 coins";
+	public static final String INFO = "[SUPERCOIN] gives 1000 coins";
 	private static boolean isPresent = false;
 	private static final String SPRITE = "$";
 	private static final int VALUE = 1000;

@@ -34,7 +34,7 @@ public class Obstacle extends GameObject{
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		// Doesn't do anything
 		
 	}
 

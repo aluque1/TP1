@@ -15,8 +15,8 @@ public class GameObjectGenerator {
 				if (!SuperCoin.hasSuperCoin()) {
 					game.tryToAddObject(new SuperCoin(game, x, game.getRandomLane()), level.advancedObjectsFrequency());
 				}
-				// TODO game.tryToAddObject(new Truck(game, x, game.getRandomLane()), level.advancedObjectsFrequency());
-				// TODO game.tryToAddObject(new Pedestrian(game, x, 0), level.advancedObjectsFrequency());
+				game.tryToAddObject(new Truck(game, x, game.getRandomLane()), level.advancedObjectsFrequency());
+				game.tryToAddObject(new Pedestrian(game, x, 0), level.advancedObjectsFrequency());
 			}
 
 		}
@@ -31,6 +31,30 @@ public class GameObjectGenerator {
 		if (game.getLevel().hasAdvancedObjects()) {
 			//game.execute(new ThunderAction());
 		}
+	}
+	public static void forceAdvanceObject(Game game, int id, int x) {
+		GameObject o = null;
+		switch (id) {
+		case 1:
+			o = new Wall(game, x, game.getRandomLane());
+			break;
+		case 2:
+			o = new Turbo(game, x, game.getRandomLane());
+			break;
+		case 3:
+			o = new SuperCoin(game, x, game.getRandomLane());
+			break;
+		case 4:
+			o = new Truck(game, x, game.getRandomLane());
+			break;
+		case 5:
+			o = new Pedestrian(game, x, 0);
+			break;
+		}
+		game.forceAddObject(o);
+	}
 
+	public static void placeGrenade(Game game, int x, int y) {
+		game.forceAddObject(new Grenade(game, x, y));
 	}
 }

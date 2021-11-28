@@ -5,8 +5,8 @@ import es.ucm.tp1.supercars.logic.Game;
 public class MoveUpCommand extends Command{
 
 	private static final String NAME = "move up";
-
-	private static final String DETAILS = "[q] Move up";
+	
+	private static final String DETAILS = "[q]: go up";
 
 	private static final String SHORTCUT = "q";
 

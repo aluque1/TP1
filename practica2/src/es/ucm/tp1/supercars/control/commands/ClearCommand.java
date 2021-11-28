@@ -4,13 +4,13 @@ import es.ucm.tp1.supercars.logic.Game;
 
 public class ClearCommand extends Command{
 
-	private static final String NAME = "clear";
+	private static final String NAME = "cheat";
 
-	private static final String DETAILS = "[0] clear";
+	private static final String DETAILS = "Cheat [0]";
 
 	private static final String SHORTCUT = "0";
 
-	private static final String HELP = "Clears the road from all obstacles.";
+	private static final String HELP = "Clears the road";
 
 	public ClearCommand() {
 		super(NAME, SHORTCUT, DETAILS, HELP);
@@ -21,5 +21,4 @@ public class ClearCommand extends Command{
 		game.clearContainer();
 		return true;
 	}
-
 }

@@ -12,15 +12,18 @@ public abstract class Command {
 	protected static final Command[] AVAILABLE_COMMANDS = {
 		new HelpCommand(),
 		new InfoCommand(),
+		new UpdateCommand(),
 		new MoveUpCommand(),
 		new MoveDownCommand(),
 		new ExitCommand(),
 		new ResetCommand(),
 		new TestCommand(),
-		new UpdateCommand(),
-		new ClearCommand(),
+		new ShootCommand(),
+		new GrenadeCommand(),
 		new WaveCommand(),
-		new ShootCommand()
+		new ClearCommand(),
+		new CheatCommand()
+		
 		// Add the new commands created here last one without a coma
 	};
 	/* @formatter:on */
