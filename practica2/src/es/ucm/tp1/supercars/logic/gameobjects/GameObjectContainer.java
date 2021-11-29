@@ -29,46 +29,40 @@ public class GameObjectContainer {
 		}
 	}
 	
+	private GameObject auxGetObjectInPosition(int x, int y) {
+        GameObject obj = null;
+        int i = 0;
+        boolean encontrado = false;
+
+        while (i < gameObjects.size() && !encontrado) {
+            if (gameObjects.get(i).isInPosition(x, y)) {
+                obj = gameObjects.get(i);
+                encontrado = true;
+            }
+            i++;
+        }
+
+        return obj;
+
+    }
+	
 	private boolean isPosEmpty(int x, int y){
-		int i = 0;
-		boolean empty = true;
-		
-		while (i < gameObjects.size() && empty) {
-			empty = !(gameObjects.get(i).isInPosition(x, y));
-			i++;
-		}
-		return empty;
-	}
+        return auxGetObjectInPosition(x, y) == null;
+    }
 
 	public String getStringAtPos(int x, int y) {
-		int i = 0;
-		boolean encontrado = false;
-		String symbol = "";
-		
-		while (i < gameObjects.size() && !encontrado) {
-			if (gameObjects.get(i).isInPosition(x, y)) {
-				symbol = gameObjects.get(i).toString();
-				encontrado = true;
-			}
-			i++;
+		StringBuilder str = new StringBuilder();
+		for(int i = 0; i < gameObjects.size(); i++) {
+			if (gameObjects.get(i).isInPosition(x, y))
+				str.append(gameObjects.get(i).toString()).append(" ");
 		}
-		return symbol;
+		return str.toString();
 	}
 
 	public Collider getObjectInPosition(int x, int y) {
-		int i = 0;
-		boolean encontrado = false;
-		Collider obj = null;
-		
-		while (i < gameObjects.size() && !encontrado) {
-			if (gameObjects.get(i).isInPosition(x, y)) {
-				obj = gameObjects.get(i);
-				encontrado = true;
-			}
-			i++;
-		}
-		return obj;
-	}
+        Collider obj = auxGetObjectInPosition(x, y);
+        return obj;
+    }
 	
 	public void removeDead() {
 		for(int i = 0; i < gameObjects.size(); i++)
@@ -110,11 +104,11 @@ public class GameObjectContainer {
 	public void recieveShot(int y) {
 		boolean hit = false;
 		int i = game.getPlayerX() + 1;
-		while(y < game.getVisibility() - 1 || !hit) {
+		while(y < game.getVisibility() - 1 && !hit) {
 			Collider go = getObjectInPosition(i, y);
 			if(go != null) {
-				getObjectInPosition(i, y).receiveShot();
-				hit = true;
+				if(go.receiveShot())
+					hit = true;
 			}
 			i++;
 		}
@@ -123,11 +117,20 @@ public class GameObjectContainer {
 	public void explode(int x, int y) {
 		for(int i = -1; i < 2; i++) {
 			for(int j = -1; j < 2; j++){
-				if(game.isWithinVisibility(x + i, y + j))
-					getObjectInPosition(x + i, y + j).receiveShot();
+				Collider go = getObjectInPosition(x + i, y + j);
+				if(go != null)
+					go.receiveShot();
 			}
 		}
 	}
 
+	public boolean recieveThunder(int i, int j) {
+		boolean hit = false;
+		Collider go = getObjectInPosition(i, j);
+		if(go != null)
+			hit = go.recieveThunder();
+		return hit;
+	
+	}
 
 }

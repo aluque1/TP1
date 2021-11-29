@@ -22,12 +22,6 @@ public class Player extends GameObject{
 		return false;
 	}
 
-	@Override
-	public boolean receiveCollision(Truck truck) {
-		truck.decreaseHP();
-		return true;
-	}
-
 	public void recieveCoin(int value) {
 		coinsCollected = getCoinsCollected() + value;
 	}
@@ -74,9 +68,7 @@ public class Player extends GameObject{
 
 	@Override
 	public void update() {
-		if(!doCollision())
-			moveForward();
-		doCollision();
+		moveForward();
 	}
 	
 	@Override

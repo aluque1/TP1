@@ -20,10 +20,6 @@ public class MoveDownCommand extends Command{
 	public boolean execute(Game game) {
 		game.checkCollision();
 		if(game.moveDown()){
-			game.moveForward();
-			game.checkCollision();
-		}
-		else{
 			game.update();
 		}
 		return true;

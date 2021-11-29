@@ -1,6 +1,5 @@
 package es.ucm.tp1.supercars.logic.gameobjects;
 
-import es.ucm.tp1.supercars.logic.Collider;
 import es.ucm.tp1.supercars.logic.Game;
 
 public class Truck extends GameObject{
@@ -15,15 +14,6 @@ public class Truck extends GameObject{
 		symbol = SPRITE;
 	}
 
-	@Override
-	public boolean doCollision() {
-		Collider obj = game.getObjectInPosition(x, y);
-		if (obj != null) {
-			return obj.receiveCollision(this);
-		}
-		return false;
-	}
-	
 	@Override
 	public boolean receiveCollision(Player player) {
 		player.decreaseHP();

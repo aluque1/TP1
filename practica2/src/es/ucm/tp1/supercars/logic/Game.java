@@ -1,15 +1,5 @@
 package es.ucm.tp1.supercars.logic;
 
-
-/** TODO :: Things we still have to do
- * 		· Implement shot in the container section of the code
- * 		· Grenade object and command is still to be done
- * 		· Truck
- * 		· Pedestrian
- * 		· ThunderAction
- * 		· CheatCommand
- */
-
 import es.ucm.tp1.supercars.logic.gameobjects.GameObjectContainer;
 import es.ucm.tp1.supercars.logic.gameobjects.Player;
 import es.ucm.tp1.supercars.logic.instantAction.InstantAction;
@@ -85,8 +75,10 @@ public class Game{
 	// Command calling methods -----------------------------------------------------------------
 	
 	public void update() {
+		GameObjectGenerator.generateRuntimeObjects(this);
 		container.update();
 		player.update();
+		checkCollision();
 		container.removeDead();
 		cycle++;
 		distance = getRoadLength() - getPlayerX();
@@ -116,8 +108,19 @@ public class Game{
 	}
 	
 	public void explode(int x, int y) {
-		container.explode(x, y);
-		
+		container.explode(x, y);	
+	}
+	
+	public void recieveThunder() {
+		StringBuilder str = new StringBuilder();
+		String sprite = "";
+		int col = getRandomColumn() + getPlayerX();
+		int row = getRandomLane();
+		str.append("Thunder hit position: (").append(col - getPlayerX()).append(", ").append(row).append(")");
+		sprite = container.getStringAtPos(col, row);
+		if(container.recieveThunder(col, row))
+			str.append(" -> ").append(sprite).append("hit");
+		System.out.println(str.toString());
 	}
 	
 	public void placeGrenade(int x, int y) {
@@ -178,7 +181,6 @@ public class Game{
 		else if(x + getPlayerX() == level.getLength() - 1)
 			str.append(FINISH_LINE);
 		str.append(" ").append(container.getStringAtPos(x + getPlayerX(), y));
-		
 		return str.toString();
 	}
 	
@@ -229,7 +231,6 @@ public class Game{
 	}
 
 	public long getRecord() {
-		// TODO will be the new record, in this case its the elapsed time
 		return elapsedTime;
 	}
 
@@ -263,5 +264,9 @@ public class Game{
 	
 	public int getRandomLane() {
 		return rand.nextInt(this.getRoadWidth());
+	}
+	
+	public int getRandomColumn() {
+		return rand.nextInt(this.getVisibility());
 	}
 }

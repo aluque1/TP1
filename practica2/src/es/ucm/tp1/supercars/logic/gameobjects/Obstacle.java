@@ -40,4 +40,11 @@ public class Obstacle extends GameObject{
 	public static int getObstaclesCount() {
 		return numOfObstacles;
 	}
+	
+	@Override
+	public boolean recieveThunder() {
+		this.hp = 0;
+		return true;
+	}
+	
 }

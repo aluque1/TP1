@@ -2,6 +2,7 @@ package es.ucm.tp1.supercars.logic;
 
 import es.ucm.tp1.supercars.control.Level;
 import es.ucm.tp1.supercars.logic.gameobjects.*;
+import es.ucm.tp1.supercars.logic.instantAction.ThunderAction;
 
 public class GameObjectGenerator {
 
@@ -23,13 +24,12 @@ public class GameObjectGenerator {
 	}
 
 	public static void reset(Level level) {
-		// TODO add your code
 	}
 
 	public static void generateRuntimeObjects(Game game) {
 		// Note we use this method to create and inject new objects or actions on runtime.
 		if (game.getLevel().hasAdvancedObjects()) {
-			//game.execute(new ThunderAction());
+			game.execute(new ThunderAction());
 		}
 	}
 	

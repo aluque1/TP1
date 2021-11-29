@@ -163,12 +163,12 @@ public class GamePrinter {
 		if (level.hasAdvancedObjects()) {
 			/* @formatter:off */
 			buffer
-			//.append(StringUtils.LINE_SEPARATOR).append(Grenade.INFO)
-			//.append(StringUtils.LINE_SEPARATOR).append(Wall.INFO)
+			.append(StringUtils.LINE_SEPARATOR).append(Grenade.INFO)
+			.append(StringUtils.LINE_SEPARATOR).append(Wall.INFO)
 			.append(StringUtils.LINE_SEPARATOR).append(Turbo.INFO)
-			.append(StringUtils.LINE_SEPARATOR).append(SuperCoin.INFO);
-			//.append(StringUtils.LINE_SEPARATOR).append(Truck.INFO)
-			//.append(StringUtils.LINE_SEPARATOR).append(Pedestrian.INFO);
+			.append(StringUtils.LINE_SEPARATOR).append(SuperCoin.INFO)
+			.append(StringUtils.LINE_SEPARATOR).append(Truck.INFO)
+			.append(StringUtils.LINE_SEPARATOR).append(Pedestrian.INFO);
 			
 			/* @formatter:on */
 		}

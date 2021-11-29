@@ -29,7 +29,6 @@ public class GamePrinter {
 
 	private String[][] board;
 	
-	// TODO cols goes where visibility
 	public GamePrinter(Game game, int cols, int rows) {
 		this.game = game;
 		this.numRows = rows;

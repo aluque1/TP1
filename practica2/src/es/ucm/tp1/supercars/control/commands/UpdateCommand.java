@@ -18,6 +18,7 @@ public class UpdateCommand extends Command {
 
 	@Override
 	public boolean execute(Game game) {
+		game.checkCollision();
 		game.update();
 		return true;
 	}

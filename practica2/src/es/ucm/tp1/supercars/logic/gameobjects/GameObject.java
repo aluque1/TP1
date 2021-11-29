@@ -28,7 +28,6 @@ public abstract class GameObject implements Collider {
 		if (isAlive()) {
 			sprite = getSymbol();
 		}
-
 		return sprite;
 	}
 

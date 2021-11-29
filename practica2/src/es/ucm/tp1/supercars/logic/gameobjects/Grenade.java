@@ -6,7 +6,7 @@ public class Grenade extends GameObject{
 
 	public static final String INFO = "[GRENADE] Explodes in 3 cycles, harming everyone around";
 	private static final String SPRITE = "ð";
-	protected static final int HP = 3;
+	protected static final int HP = 4;
 	
 	public Grenade(Game game, int x, int y) {
 		super(game, x, y);
@@ -16,7 +16,6 @@ public class Grenade extends GameObject{
 
 	@Override
 	public boolean receiveCollision(Player player) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -29,13 +28,11 @@ public class Grenade extends GameObject{
 	public void update() {
 		if(isAlive()) 
 			hp--;
-		//else 
-			//explosionAction(game, x, y); 
 	}
 
 	@Override
 	public void onDelete() {
-		// Does not do anything
+		game.explode(x, y);
 	}
 	
 	@Override

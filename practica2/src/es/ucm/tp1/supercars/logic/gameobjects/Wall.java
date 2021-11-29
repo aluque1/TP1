@@ -10,6 +10,7 @@ public class Wall extends Obstacle{
 
 	public Wall(Game game, int x, int randomLane) {
 		super(game, x, randomLane);
+		this.hp = HP;
 	}
 
 	@Override
@@ -22,14 +23,14 @@ public class Wall extends Obstacle{
 	public String toString() {
 		String sprite = null;
 		switch (hp) {
+		case 3:
+			sprite = "█";
+			break;
 		case 2:
 			sprite = "▒";
 			break;
 		case 1:
 			sprite = "░";
-		default:
-			sprite = "█";
-			break;
 		}
 		return sprite;
 	}
