@@ -1,6 +1,7 @@
 package es.ucm.tp1.supercars.logic.gameobjects;
 
 import es.ucm.tp1.supercars.logic.Game;
+import es.ucm.tp1.supercars.logic.instantAction.ExplosionAction;
 
 public class Grenade extends GameObject{
 
@@ -32,7 +33,7 @@ public class Grenade extends GameObject{
 
 	@Override
 	public void onDelete() {
-		game.explode(x, y);
+		game.execute(new ExplosionAction(x, y));
 	}
 	
 	@Override

@@ -3,6 +3,7 @@ package es.ucm.tp1.supercars.logic;
 import es.ucm.tp1.supercars.logic.gameobjects.GameObjectContainer;
 import es.ucm.tp1.supercars.logic.gameobjects.Player;
 import es.ucm.tp1.supercars.logic.instantAction.InstantAction;
+import es.ucm.tp1.supercars.view.GamePrinter;
 
 import java.util.Random;
 import es.ucm.tp1.supercars.control.Level;
@@ -13,7 +14,6 @@ public class Game{
 	// Constants ----------------------------------------------
 	private static final String FINISH_LINE = "¦";
 	
-	
 	Player player;
 	GameObjectContainer container;
 	Level level;
@@ -22,6 +22,7 @@ public class Game{
 	boolean newRecord;
 	Long seed;
 	Random rand;
+	GamePrinter printer;
 	
 	// Attributes that describe the game ---------------------------
 	long elapsedTime; 
@@ -39,9 +40,10 @@ public class Game{
 		this.level = level;
 		rand = new Random(this.seed);
 		container = new GameObjectContainer(this);
+		GameObjectGenerator.reset();
 		GameObjectGenerator.generateGameObjects(this, level);
 		player = new Player(this, 0, getRoadWidth()/2);
-		// initialisation of description attributes
+		// initialization of description attributes
 		distance = getRoadLength();
 		cycle = 0;
 		elapsedTime = 0;
@@ -60,10 +62,6 @@ public class Game{
 		return (row < getRoadWidth() && row >= 0);
 	}
 	
-	public boolean isWithinVisibility(int col, int row) {
-		return (row < getRoadWidth() && row >= 0) && (col >= getPlayerX() && col <= (getPlayerX() + getVisibility() - 1));
-	}
-	
 	public boolean isAtTopOfRoad(int row) {
 		return row == 0;
 	}
@@ -74,10 +72,16 @@ public class Game{
 	
 	// Command calling methods -----------------------------------------------------------------
 	
-	public void update() {
+	public void update(boolean hasDodged) {
 		GameObjectGenerator.generateRuntimeObjects(this);
 		container.update();
+		
+		if (!hasDodged)
+			checkCollision();
+		
+		if (player.isAlive())
 		player.update();
+		
 		checkCollision();
 		container.removeDead();
 		cycle++;
@@ -89,23 +93,21 @@ public class Game{
 	}
 	
 	public void reset(String[] params) {
-		if(params.length == 0)
+		if(params.length == 1)
 			init(seed, level);
 		else
-			init(Long.parseLong(params[0]), Level.valueOfIgnoreCase(params[1]));
+			init(Long.parseLong(params[1]), Level.valueOfIgnoreCase(params[0]));
+		
+		printer.init();
 	}
 
 	public void spendCoins(int price) {
 		player.spendCoins(price);
 	}
 	
-	public void explode(int x, int y) {
-		container.explode(x, y);	
-	}
-	
 	public void placeGrenade(int x, int y) {
 		GameObjectGenerator.placeGrenade(this, x + getPlayerX(), y);
-		update();
+		update(!checkCollision());
 	}
 	
 	// Game object creation and deletion --------------------------------------------
@@ -133,11 +135,8 @@ public class Game{
 	}
 
 	public boolean moveDown() {
+		
 		return player.moveDown();
-	}
-	
-	public void moveForward() {
-		player.moveForward();
 	}
 	
 	public boolean checkCollision() {
@@ -166,6 +165,10 @@ public class Game{
 	
 	public String getStringAtPos(int x, int y) {
 		return container.getStringAtPos(x, y);
+	}
+	
+	public void recievePrinter(GamePrinter printer) {
+		this.printer = printer;
 	}
 	
 	// Getters and setters ------------------------------------------------

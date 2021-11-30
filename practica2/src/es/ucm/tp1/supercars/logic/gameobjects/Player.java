@@ -47,21 +47,19 @@ public class Player extends GameObject{
 	}
 	
 	public boolean moveUp() {
-		boolean canMove = false;
+		boolean canMove = !game.checkCollision();
 		int futurePos = y - 1;
-		if(game.isWithinBounds(futurePos)) {
+		if(game.isWithinBounds(futurePos) && canMove) {
 			y = futurePos;
-			canMove = true;
 		}
 		return canMove;
 	}
 
 	public boolean moveDown() {
-		boolean canMove = false;
+		boolean canMove = !game.checkCollision();
 		int futurePos = y + 1;
-		if(game.isWithinBounds(futurePos)) {
+		if(game.isWithinBounds(futurePos) && canMove) {
 			y = futurePos;
-			canMove = true;
 		}
 		return canMove;
 	}

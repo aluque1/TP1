@@ -23,7 +23,8 @@ public class GameObjectGenerator {
 		}
 	}
 
-	public static void reset(Level level) {
+	public static void reset() {
+		SuperCoin.reset();
 	}
 
 	public static void generateRuntimeObjects(Game game) {

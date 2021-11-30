@@ -31,19 +31,17 @@ public class GameObjectContainer {
 	
 	private GameObject auxGetObjectInPosition(int x, int y) {
         GameObject obj = null;
-        int i = 0;
+        int i = gameObjects.size() - 1;
         boolean encontrado = false;
 
-        while (i < gameObjects.size() && !encontrado) {
+        while (i >= 0 && !encontrado) {
             if (gameObjects.get(i).isInPosition(x, y)) {
                 obj = gameObjects.get(i);
                 encontrado = true;
             }
-            i++;
+            i--;
         }
-
         return obj;
-
     }
 	
 	private boolean isPosEmpty(int x, int y){
@@ -86,16 +84,6 @@ public class GameObjectContainer {
 			if(gameObjects.get(i).getX() == col)
 				gameObjects.get(i).instaKill();
 		removeDead();
-	}
-	
-	public void explode(int x, int y) { // Mover a un new explosion action
-		for(int i = -1; i < 2; i++) {
-			for(int j = -1; j < 2; j++){
-				Collider go = getObjectInPosition(x + i, y + j);
-				if(go != null)
-					go.receiveShot();
-			}
-		}
 	}
 	
 }

@@ -18,10 +18,8 @@ public class MoveUpCommand extends Command{
 
 	@Override
 	public boolean execute(Game game) {
-		game.checkCollision();
-		if(game.moveUp()) {
-			game.update();
-		}
+		game.update(game.moveUp());
+		
 		return true;
 			
 	}

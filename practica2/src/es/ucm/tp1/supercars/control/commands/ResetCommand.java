@@ -31,12 +31,14 @@ public class ResetCommand extends Command{
 			if (words.length == 2 || words.length > 3) {
 				System.out.format("[ERROR]: Command %s: %s%n%n", NAME, INCORRECT_NUMBER_OF_ARGS_MSG);
 				return null;
-			} else {
+			} 
+			else if (params.length == 3) {
 				params[0] = words[1];
 				params[1] = words[2];
-				return this;
 			}
+			return this;
 		}
+		else
 		return null;
 	}
 

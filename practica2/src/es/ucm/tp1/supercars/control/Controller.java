@@ -22,6 +22,8 @@ public class Controller {
 		this.scanner = scanner;
 
 		this.printer = new GamePrinter(game);
+		
+		game.recievePrinter(printer);
 
 	}
 

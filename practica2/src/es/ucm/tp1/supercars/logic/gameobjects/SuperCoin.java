@@ -25,6 +25,10 @@ public class SuperCoin extends Coin{
 		isPresent = false;
 	}
 	
+	public static void reset() {
+		isPresent = false;
+	}
+	
 	public static boolean hasSuperCoin() {
 		return isPresent;
 	}

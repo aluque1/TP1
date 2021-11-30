@@ -60,7 +60,10 @@ public class GamePrinter {
 
 	public GamePrinter(Game game) {
 		this.game = game;
-
+		init();
+	}
+	
+	public void init() {
 		margin = StringUtils.repeat(SPACE, MARGIN_SIZE);
 
 		String roadBorder = ROAD_BORDER_PATTERN
@@ -175,4 +178,6 @@ public class GamePrinter {
 	
 		return buffer.toString();
 	}
+	
+	
 }
