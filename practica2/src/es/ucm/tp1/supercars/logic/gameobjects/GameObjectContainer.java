@@ -88,33 +88,7 @@ public class GameObjectContainer {
 		removeDead();
 	}
 	
-	public void recieveWave() {
-		int initialPos = game.getPlayerX() + game.getVisibility() - 1; 
-		for(int i = initialPos; i >= game.getPlayerX(); i--) {
-			for(int j = 0; j < game.getRoadWidth(); j++) {
-				if(isPosEmpty(i + 1,j)) {
-					Collider go = getObjectInPosition(i, j);
-					if(go != null)
-						getObjectInPosition(i, j).receiveWave();
-				}
-			}
-		}
-	}
-
-	public void recieveShot(int y) {
-		boolean hit = false;
-		int i = game.getPlayerX() + 1;
-		while(y < game.getVisibility() - 1 && !hit) {
-			Collider go = getObjectInPosition(i, y);
-			if(go != null) {
-				if(go.receiveShot())
-					hit = true;
-			}
-			i++;
-		}
-	}
-	
-	public void explode(int x, int y) {
+	public void explode(int x, int y) { // Mover a un new explosion action
 		for(int i = -1; i < 2; i++) {
 			for(int j = -1; j < 2; j++){
 				Collider go = getObjectInPosition(x + i, y + j);
@@ -123,14 +97,5 @@ public class GameObjectContainer {
 			}
 		}
 	}
-
-	public boolean recieveThunder(int i, int j) {
-		boolean hit = false;
-		Collider go = getObjectInPosition(i, j);
-		if(go != null)
-			hit = go.recieveThunder();
-		return hit;
 	
-	}
-
 }

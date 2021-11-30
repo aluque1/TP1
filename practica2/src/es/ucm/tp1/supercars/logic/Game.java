@@ -99,28 +99,8 @@ public class Game{
 		player.spendCoins(price);
 	}
 	
-	public void recieveWave() {
-		container.recieveWave();
-	}
-
-	public void recieveShot() {
-		container.recieveShot(getPlayerY());
-	}
-	
 	public void explode(int x, int y) {
 		container.explode(x, y);	
-	}
-	
-	public void recieveThunder() {
-		StringBuilder str = new StringBuilder();
-		String sprite = "";
-		int col = getRandomColumn() + getPlayerX();
-		int row = getRandomLane();
-		str.append("Thunder hit position: (").append(col - getPlayerX()).append(", ").append(row).append(")");
-		sprite = container.getStringAtPos(col, row);
-		if(container.recieveThunder(col, row))
-			str.append(" -> ").append(sprite).append("hit");
-		System.out.println(str.toString());
 	}
 	
 	public void placeGrenade(int x, int y) {
@@ -180,8 +160,12 @@ public class Game{
 			str.append(player.toString());
 		else if(x + getPlayerX() == level.getLength() - 1)
 			str.append(FINISH_LINE);
-		str.append(" ").append(container.getStringAtPos(x + getPlayerX(), y));
+		str.append(" ").append(getStringAtPos(x + getPlayerX(), y));
 		return str.toString();
+	}
+	
+	public String getStringAtPos(int x, int y) {
+		return container.getStringAtPos(x, y);
 	}
 	
 	// Getters and setters ------------------------------------------------
