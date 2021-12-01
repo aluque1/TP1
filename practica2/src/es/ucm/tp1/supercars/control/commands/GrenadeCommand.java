@@ -27,13 +27,17 @@ public class GrenadeCommand extends Command implements Buyable{
 	@Override
 	public boolean execute(Game game) {
 		boolean executed = false;
-		if (game.isWithinVisibility(x, y) && buy(game)) {
-			game.placeGrenade(x, y);
-			game.update(doesInstantMovement());
-			executed = true;
+		if (game.isWithinVisibility(x, y)) {
+			if (buy(game)) {
+				game.placeGrenade(x, y);
+				game.update(doesInstantMovement());
+				executed = true;
+			}
+			else 
+				System.out.println("Not enough coins to perform this action.");
 		}
 		else {
-			System.out.println("[ERROR]: " + FAILED_MSG);
+			System.out.println("[ERROR]: out of range, " + FAILED_MSG + "\n");
 		}
 		return executed;
 	}
