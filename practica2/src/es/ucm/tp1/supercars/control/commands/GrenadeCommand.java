@@ -27,7 +27,7 @@ public class GrenadeCommand extends Command implements Buyable{
 	@Override
 	public boolean execute(Game game) {
 		boolean executed = false;
-		if (game.isWithinVisibility(x, y)) {
+		if (game.isWithinVisibility(x, y) && buy(game)) {
 			game.placeGrenade(x, y);
 			game.update(doesInstantMovement());
 			executed = true;
