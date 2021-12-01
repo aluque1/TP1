@@ -18,8 +18,16 @@ public class MoveDownCommand extends Command{
 
 	@Override
 	public boolean execute(Game game) {
-		game.update(game.moveDown());
+		if(!game.checkCollision()) {
+		game.moveDown();
+		game.update(doesInstantMovement());
+		}
 		
+		return true;
+	}
+	
+	@Override
+	protected boolean doesInstantMovement() {
 		return true;
 	}
 

@@ -14,6 +14,9 @@ public class GrenadeCommand extends Command implements Buyable{
 	private static final String SHORTCUT = "g";
 
 	private static final String HELP = "add a grenade in position x, y";
+	
+	private static final String FAILED_MSG = "grenade could no be placed down";
+
 
 	private int x, y;
 	
@@ -23,8 +26,16 @@ public class GrenadeCommand extends Command implements Buyable{
 	
 	@Override
 	public boolean execute(Game game) {
-		game.placeGrenade(x, y);
-		return true;
+		boolean executed = false;
+		if (game.isWithinVisibility(x, y)) {
+			game.placeGrenade(x, y);
+			game.update(doesInstantMovement());
+			executed = true;
+		}
+		else {
+			System.out.println("[ERROR]: " + FAILED_MSG);
+		}
+		return executed;
 	}
 
 	@Override

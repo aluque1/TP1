@@ -20,6 +20,7 @@ public class Pedestrian extends GameObject{
 	public boolean receiveCollision(Player player) {
 		player.decreaseHP();
 		player.loseCoins();
+		decreaseHP();
 		return true;
 	}
 

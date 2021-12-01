@@ -82,4 +82,9 @@ public abstract class Command {
 		return str.toString();
 		
 	}
+	
+	protected boolean doesInstantMovement() {
+		return false;
+	}
+	
 }

@@ -70,19 +70,23 @@ public class Game{
 		return row < getRoadWidth();
 	}
 	
+	public boolean isWithinVisibility(int col, int row) {
+		return (row < getRoadWidth() && row >= 0) && (col >= getPlayerX() && col <= (getPlayerX() + getVisibility() - 1));
+	}
+	
 	// Command calling methods -----------------------------------------------------------------
 	
-	public void update(boolean hasDodged) {
+	public void update(boolean hasMovedSideways) {
 		GameObjectGenerator.generateRuntimeObjects(this);
-		container.update();
 		
-		if (!hasDodged)
+		if(!hasMovedSideways)
 			checkCollision();
 		
-		if (player.isAlive())
-		player.update();
+		if (player.isAlive()) {
+			player.update();
+			container.update();
+		}
 		
-		checkCollision();
 		container.removeDead();
 		cycle++;
 		distance = getRoadLength() - getPlayerX();
@@ -107,7 +111,6 @@ public class Game{
 	
 	public void placeGrenade(int x, int y) {
 		GameObjectGenerator.placeGrenade(this, x + getPlayerX(), y);
-		update(!checkCollision());
 	}
 	
 	// Game object creation and deletion --------------------------------------------
@@ -130,13 +133,12 @@ public class Game{
 	}
 	// Player interaction methods -----------------------------------------
 
-	public boolean moveUp() {
-		return player.moveUp();
+	public void moveUp() {
+		player.moveUp();
 	}
 
-	public boolean moveDown() {
-		
-		return player.moveDown();
+	public void moveDown() {
+		player.moveDown();
 	}
 	
 	public boolean checkCollision() {

@@ -31,15 +31,15 @@ public class GameObjectContainer {
 	
 	private GameObject auxGetObjectInPosition(int x, int y) {
         GameObject obj = null;
-        int i = gameObjects.size() - 1;
+        int i = 0;
         boolean encontrado = false;
 
-        while (i >= 0 && !encontrado) {
+        while (i < gameObjects.size() && !encontrado) {
             if (gameObjects.get(i).isInPosition(x, y)) {
                 obj = gameObjects.get(i);
                 encontrado = true;
             }
-            i--;
+            i++;
         }
         return obj;
     }

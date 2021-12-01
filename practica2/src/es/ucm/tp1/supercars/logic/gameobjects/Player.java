@@ -13,7 +13,6 @@ public class Player extends GameObject{
 		onEnter();
 	}
 
-	@Override
 	public boolean doCollision() {
 		Collider obj = game.getObjectInPosition(x, y);
 		if (obj != null) {
@@ -46,27 +45,24 @@ public class Player extends GameObject{
 		x++;
 	}
 	
-	public boolean moveUp() {
-		boolean canMove = !game.checkCollision();
+	public void moveUp() {
 		int futurePos = y - 1;
-		if(game.isWithinBounds(futurePos) && canMove) {
+		if(game.isWithinBounds(futurePos)) {
 			y = futurePos;
 		}
-		return canMove;
 	}
 
-	public boolean moveDown() {
-		boolean canMove = !game.checkCollision();
+	public void moveDown() {
 		int futurePos = y + 1;
-		if(game.isWithinBounds(futurePos) && canMove) {
+		if(game.isWithinBounds(futurePos)) {
 			y = futurePos;
 		}
-		return canMove;
 	}
 
 	@Override
 	public void update() {
 		moveForward();
+		doCollision();
 	}
 	
 	@Override
