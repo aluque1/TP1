@@ -49,5 +49,14 @@ public class Grenade extends GameObject{
 		}
 		return sprite;
 	}
+	
+	@Override
+	public String toSerialize() {
+		StringBuilder str = new StringBuilder();
+		str.append(super.toSerialize());
+		str.append(" ").append(this.hp);
+		
+		return str.toString();
+	}
 
 }

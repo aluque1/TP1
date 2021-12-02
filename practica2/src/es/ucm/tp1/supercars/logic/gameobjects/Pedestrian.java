@@ -52,5 +52,23 @@ public class Pedestrian extends GameObject{
 	public void onDelete() {
 		// Empty
 	}
+	
+	@Override
+	public String toSerialize() {
+		StringBuilder str = new StringBuilder();
+		str.append(super.toSerialize());
+		str.append(" ").append(dirString());
+		
+		return str.toString();
+	}
+	
+	private String dirString() {
+		String dir;
+		if(down)
+			dir = "down";
+		else
+			dir = "up";
+		return dir;
+	}
 
 }

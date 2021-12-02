@@ -31,6 +31,13 @@ public abstract class GameObject implements Collider {
 		return sprite;
 	}
 
+	public String toSerialize() {
+		StringBuilder str = new StringBuilder();
+		str.append(toString());
+		str.append("(").append(getX()).append(",").append(getY()).append(")");
+		return str.toString();
+	}
+	
 	public boolean isInPosition(int x, int y) {
 		return this.x == x && this.y == y;
 	}

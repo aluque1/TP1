@@ -70,8 +70,9 @@ public class Game{
 		return row < getRoadWidth();
 	}
 	
+	
 	public boolean isWithinVisibility(int col, int row) {
-		return (row < getRoadWidth() && row >= 0) && (col >= getPlayerX() && col <= (getPlayerX() + getVisibility() - 1));
+		return (row < getRoadWidth() && row >= 0) && (col >= 0 && col <= (getVisibility() - 1));
 	}
 	
 	// Command calling methods -----------------------------------------------------------------
