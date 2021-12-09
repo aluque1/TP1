@@ -9,6 +9,10 @@ import java.util.Random;
 import es.ucm.tp1.supercars.control.Level;
 import es.ucm.tp1.supercars.logic.gameobjects.GameObject;
 
+/** TODO List
+ * GAMEOBJECT: Move the reciveWave and recieveShot to the interface as a default and implement in those classes where needed
+ * CONTAINER : Move the last visible column to the CheatCommand
+ */
 public class Game{
 
 	// Constants ----------------------------------------------

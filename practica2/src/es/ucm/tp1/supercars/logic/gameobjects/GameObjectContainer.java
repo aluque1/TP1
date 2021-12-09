@@ -86,4 +86,9 @@ public class GameObjectContainer {
 		removeDead();
 	}
 	
+	public void removeObjectInPos(int col, int row) {
+		gameObjects.remove(1);
+		gameObjects.get(1).onDelete();
+	}
+	
 }

@@ -1,5 +1,6 @@
 package es.ucm.tp1.supercars.control.commands;
 
+import es.ucm.tp1.supercars.control.exceptions.CommandParseException;
 import es.ucm.tp1.supercars.logic.Game;
 
 public class ResetCommand extends Command{
@@ -24,13 +25,13 @@ public class ResetCommand extends Command{
 		return true;
 	}
 	
+	// TODO PARSE IS NOt GOOD
 	@Override
-	protected Command parse(String[] words) {
+	protected Command parse(String[] words) throws CommandParseException{
 		if (matchCommandName(words[0])) {
 			params = words;
 			if (words.length == 2 || words.length > 3) {
-				System.out.format("[ERROR]: Command %s: %s%n%n", NAME, INCORRECT_NUMBER_OF_ARGS_MSG);
-				return null;
+				throw new CommandParseException(String.format("[Error] : Command %s: %s", NAME, INCORRECT_NUMBER_OF_ARGS_MSG));
 			} 
 			else if (params.length == 3) {
 				params[0] = words[1];

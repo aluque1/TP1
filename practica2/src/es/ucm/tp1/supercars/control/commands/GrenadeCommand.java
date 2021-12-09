@@ -1,6 +1,7 @@
 package es.ucm.tp1.supercars.control.commands;
 
 import es.ucm.tp1.supercars.control.Buyable;
+import es.ucm.tp1.supercars.control.exceptions.CommandParseException;
 import es.ucm.tp1.supercars.logic.Game;
 
 public class GrenadeCommand extends Command implements Buyable{
@@ -43,11 +44,11 @@ public class GrenadeCommand extends Command implements Buyable{
 	}
 
 	@Override
-	protected Command parse(String[] words) {
+	protected Command parse(String[] words) throws CommandParseException{
 		Command command = null;
 		if (matchCommandName(words[0])) {
 			if (words.length != 3) {
-				System.out.format("[ERROR]: Command %s: %s%n%n", NAME, INCORRECT_NUMBER_OF_ARGS_MSG);
+				throw new CommandParseException(String.format("[Error] : Command %s: %s", NAME, INCORRECT_NUMBER_OF_ARGS_MSG));
 			} else {
 				x = Integer.parseInt(words[1]);
 				y = Integer.parseInt(words[2]);

@@ -3,6 +3,7 @@ package es.ucm.tp1.supercars.control;
 import java.util.Scanner;
 
 import es.ucm.tp1.supercars.control.commands.Command;
+import es.ucm.tp1.supercars.control.exceptions.GameException;
 import es.ucm.tp1.supercars.logic.Game;
 import es.ucm.tp1.supercars.view.GamePrinter;
 
@@ -49,10 +50,15 @@ public class Controller {
 
 			String[] parameters = s.toLowerCase().trim().split(" ");
 			System.out.format(DEBUG_MSG, s);
-			Command command = Command.getCommand(parameters);
-			if (command != null) {
-				refreshDisplay = command.execute(game);
+			try {
+				Command command = Command.getCommand(parameters);
+				if (command != null) {
+					refreshDisplay = command.execute(game);
+				}
+			} catch(GameException e) {
+				System.out.format(e.getMessage() + "%n %n");
 			}
+			
 		}
 		if (refreshDisplay) {
 			printGame();

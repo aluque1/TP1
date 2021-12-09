@@ -1,5 +1,6 @@
 package es.ucm.tp1.supercars.control.commands;
 
+import es.ucm.tp1.supercars.control.exceptions.*;
 import es.ucm.tp1.supercars.logic.Game;
 
 public abstract class Command {
@@ -16,19 +17,19 @@ public abstract class Command {
 		new MoveUpCommand(),
 		new MoveDownCommand(),
 		new ExitCommand(),
+		new CheatCommand(),
 		new ResetCommand(),
 		new TestCommand(),
 		new ShootCommand(),
 		new GrenadeCommand(),
 		new WaveCommand(),
-		new ClearCommand(),
-		new CheatCommand()
+		new ClearCommand()
 		
 		// Add the new commands created here last one without a coma
 	};
 	/* @formatter:on */
 
-	public static Command getCommand(String[] commandWords) {
+	public static Command getCommand(String[] commandWords) throws CommandParseException {
 		Command command = null;
 		int i = 0;
 		while(command == null && i < AVAILABLE_COMMANDS.length) {
@@ -56,17 +57,16 @@ public abstract class Command {
 		this.help = help;
 	}
 
-	public abstract boolean execute(Game game);
+	public abstract boolean execute(Game game) throws CommandExecuteException;
 
 	protected boolean matchCommandName(String name) {
 		return this.shortcut.equalsIgnoreCase(name) || this.name.equalsIgnoreCase(name);
 	}
 
-	protected Command parse(String[] words) {
+	protected Command parse(String[] words) throws CommandParseException{ 
 		if (matchCommandName(words[0])) {
 			if (words.length != 1) {
-				System.out.format("[ERROR]: Command %s: %s%n%n", name, INCORRECT_NUMBER_OF_ARGS_MSG);
-				return null;
+				throw new CommandParseException(String.format("[Error] : Command %s: %s", name, INCORRECT_NUMBER_OF_ARGS_MSG));
 			} else {
 				return this;
 			}

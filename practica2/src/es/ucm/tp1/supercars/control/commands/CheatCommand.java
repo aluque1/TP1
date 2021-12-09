@@ -1,5 +1,6 @@
 package es.ucm.tp1.supercars.control.commands;
 
+import es.ucm.tp1.supercars.control.exceptions.CommandParseException;
 import es.ucm.tp1.supercars.logic.Game;
 import es.ucm.tp1.supercars.logic.GameObjectGenerator;
 
@@ -32,11 +33,11 @@ public class CheatCommand extends Command{
 	}
 	
 	@Override
-	protected Command parse(String[] words) {
+	protected Command parse(String[] words) throws CommandParseException{
 		Command command = null;
 		if (matchCommandName(words[0])) {
-			if ((words.length > 2 && words.length < 1) || (words.length == 1 && words[0].equalsIgnoreCase(NAME))) {
-				System.out.format("[ERROR]: Command %s: %s%n%n", NAME, INCORRECT_NUMBER_OF_ARGS_MSG);
+			if (words.length > 1) {
+				throw new CommandParseException(String.format("[Error] : Command %s: %s", NAME, INCORRECT_NUMBER_OF_ARGS_MSG));
 			} else {
 				param = Integer.parseInt(words[0]);
 				if(param > 0 && param < 6)
