@@ -16,11 +16,11 @@ public class CheatCommand extends Command{
 	private static final String HELP = "Removes all elements of last visible column, and adds an Advanced Object";
 
 	private int param;
-	
+
 	public CheatCommand() {
 		super(NAME, SHORTCUT, DETAILS, HELP);
 	}
-	
+
 	@Override
 	public boolean execute(Game game) {
 		int col = game.getPlayerX() + game.getVisibility() - 1;
@@ -28,31 +28,30 @@ public class CheatCommand extends Command{
 		GameObjectGenerator.forceAdvanceObject(game, param, col);
 		return true;
 	}
-	
+
 	private void clearLastVisibleColumn(Game game, int col) {
 		for(int i = 0; i < game.getRoadWidth(); i++) {
 			Collider go = game.getObjectInPosition(col, i);
 			if(go != null)
 				go.instaKill();
-		game.removeDeadObjects();
-	}
-}
-
-	protected boolean matchCommandName(String name) {
-		return NAME.equalsIgnoreCase(name) || name == String.valueOf(name);
+			game.removeDeadObjects();
+		}
 	}
 	
 	@Override
 	protected Command parse(String[] words) throws CommandParseException{
 		Command command = null;
-		if (matchCommandName(words[0])) {
+		try{
+			Integer.valueOf(words[0]);
 			if (words.length > 1) {
 				throw new CommandParseException(String.format("[Error] : Command %s: %s", NAME, INCORRECT_NUMBER_OF_ARGS_MSG));
 			} else {
 				param = Integer.parseInt(words[0]);
 				if(param > 0 && param < 6)
-				command = this;
+					command = this;
 			}
+		} catch (NumberFormatException e) {
+			//not an integer
 		}
 		return command;
 	}

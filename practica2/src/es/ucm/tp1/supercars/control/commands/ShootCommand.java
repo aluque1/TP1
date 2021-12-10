@@ -1,6 +1,7 @@
 package es.ucm.tp1.supercars.control.commands;
 
 import es.ucm.tp1.supercars.control.Buyable;
+import es.ucm.tp1.supercars.control.exceptions.CommandExecuteException;
 import es.ucm.tp1.supercars.logic.Game;
 import es.ucm.tp1.supercars.logic.instantAction.ShotAction;
 
@@ -21,15 +22,14 @@ public class ShootCommand extends Command implements Buyable{
 	}
 
 	@Override
-	public boolean execute(Game game) {
+	public boolean execute(Game game) throws CommandExecuteException {
 		boolean executed = false;
+		
 		if(buy(game)) {
 			game.execute(new ShotAction());
 			game.update(doesInstantMovement());
 			executed = true;
 		}
-		if(!executed)
-			System.out.println("Not enough coins to perform this action.");
 		return executed;
 	}
 

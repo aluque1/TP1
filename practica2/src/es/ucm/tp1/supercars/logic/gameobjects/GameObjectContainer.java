@@ -44,7 +44,7 @@ public class GameObjectContainer {
         return obj;
     }
 	
-	private boolean isPosEmpty(int x, int y){
+	public boolean isPosEmpty(int x, int y){
         return auxGetObjectInPosition(x, y) == null;
     }
 
@@ -53,6 +53,14 @@ public class GameObjectContainer {
 		for(int i = 0; i < gameObjects.size(); i++) {
 			if (gameObjects.get(i).isInPosition(x, y))
 				str.append(gameObjects.get(i).toString()).append(" ");
+		}
+		return str.toString();
+	}
+	
+	public String toSerialize() {
+		StringBuilder str = new StringBuilder();
+		for (GameObject obj : gameObjects) {
+		 	str.append(obj.toSerialize()).append('\n');
 		}
 		return str.toString();
 	}
@@ -82,5 +90,4 @@ public class GameObjectContainer {
 		gameObjects.remove(1);
 		gameObjects.get(1).onDelete();
 	}
-	
 }

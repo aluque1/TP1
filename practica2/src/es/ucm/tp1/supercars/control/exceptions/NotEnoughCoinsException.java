@@ -1,10 +1,10 @@
 package es.ucm.tp1.supercars.control.exceptions;
 
-public class CommandParseException extends GameException{
-	
+public class NotEnoughCoinsException extends CommandExecuteException{
 	private static final long serialVersionUID = 1L;
 	
-	public CommandParseException(String format) {
+	public NotEnoughCoinsException(String format) {
 		super(format);
 	}
+
 }

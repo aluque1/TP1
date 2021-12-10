@@ -10,9 +10,4 @@ public class GameException extends Exception{
 	public GameException(String message) {
 		super(message);
 	}
-	
-	// TODO Delete if we do not use this.
-	public GameException(String message, Throwable cause) {
-		super(message, cause);
-	}
 }

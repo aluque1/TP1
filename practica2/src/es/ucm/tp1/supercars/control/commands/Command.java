@@ -17,15 +17,15 @@ public abstract class Command {
 		new MoveUpCommand(),
 		new MoveDownCommand(),
 		new ExitCommand(),
-		new CheatCommand(),
 		new ResetCommand(),
 		new TestCommand(),
 		new ShootCommand(),
 		new GrenadeCommand(),
 		new WaveCommand(),
-		new ClearCommand()
+		new ClearCommand(), 
+		new CheatCommand(),
+		new SerializeCommand()
 		
-		// Add the new commands created here last one without a coma
 	};
 	/* @formatter:on */
 

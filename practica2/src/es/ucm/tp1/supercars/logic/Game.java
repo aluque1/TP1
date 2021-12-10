@@ -10,10 +10,6 @@ import es.ucm.tp1.supercars.control.Level;
 import es.ucm.tp1.supercars.logic.gameobjects.GameObject;
 
 /** TODO List
- * GAMEOBJECT: Move the reciveWave and recieveShot to the interface 
- * 				as a default and implement in those classes where needed. Done
- * CONTAINER : Move the last visible column to the CheatCommand. Done
- * Truck, and Pedestrian inherits from Obstacle. Done
  */
 public class Game{
 
@@ -116,8 +112,13 @@ public class Game{
 		player.spendCoins(price);
 	}
 	
-	public void placeGrenade(int x, int y) {
-		GameObjectGenerator.placeGrenade(this, x + getPlayerX(), y);
+	public boolean placeGrenade(int x, int y) {
+		boolean placed = true;
+		if(container.isPosEmpty(x, y))
+			GameObjectGenerator.placeGrenade(this, x + getPlayerX(), y);
+		else
+			placed = false;
+		return placed;
 	}
 	
 	// Game object creation and deletion --------------------------------------------
@@ -159,7 +160,6 @@ public class Game{
 	
 	public void playerLoseCoins() {
 		player.loseCoins();
-		
 	}
 	
 	// GamePrinter methods ------------------------------------------------
@@ -180,6 +180,15 @@ public class Game{
 	public void recievePrinter(GamePrinter printer) {
 		this.printer = printer;
 	}
+	// GameSeralizer methods ----------------------------------------------
+	
+	public String toSerialize() {
+		StringBuilder str = new StringBuilder();
+		str.append(player.toSerialize()).append('\n');
+		str.append(container.toSerialize());
+		return str.toString();
+	}
+	
 	
 	// Getters and setters ------------------------------------------------
 	

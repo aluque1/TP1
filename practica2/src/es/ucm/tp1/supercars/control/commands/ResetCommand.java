@@ -25,22 +25,21 @@ public class ResetCommand extends Command{
 		return true;
 	}
 	
-	// TODO PARSE IS NOt GOOD
 	@Override
-	protected Command parse(String[] words) throws CommandParseException{
-		if (matchCommandName(words[0])) {
+	protected Command parse(String[] words) throws CommandParseException, NumberFormatException{
+		Command command = null;
+		if (super.matchCommandName(words[0])) {
 			params = words;
-			if (words.length == 2 || words.length > 3) {
+			if (words.length != 1 && words.length != 3) {
 				throw new CommandParseException(String.format("[Error] : Command %s: %s", NAME, INCORRECT_NUMBER_OF_ARGS_MSG));
-			} 
-			else if (params.length == 3) {
+			}
+			else if(words.length == 3){
 				params[0] = words[1];
 				params[1] = words[2];
 			}
-			return this;
+			command = this;
 		}
-		else
-		return null;
+		return command;
 	}
 
 }
