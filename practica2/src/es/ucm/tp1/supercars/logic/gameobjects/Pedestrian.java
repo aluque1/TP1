@@ -2,7 +2,7 @@ package es.ucm.tp1.supercars.logic.gameobjects;
 
 import es.ucm.tp1.supercars.logic.Game;
 
-public class Pedestrian extends GameObject{
+public class Pedestrian extends Obstacle{
 
 	public static final String INFO = "[PEDESTRIAN] person crossing the road up and down[PEDESTRIAN] person crossing the road up and down";
 	private static final String SPRITE = "☺";
@@ -23,19 +23,6 @@ public class Pedestrian extends GameObject{
 		decreaseHP();
 		return true;
 	}
-
-	@Override
-	public void onEnter() {
-		// Empty
-		
-	}
-
-	@Override
-	public boolean receiveShot() {
-		this.hp--;
-		game.playerLoseCoins();
-		return true;
-	}
 	
 	@Override
 	public void update() {
@@ -47,11 +34,6 @@ public class Pedestrian extends GameObject{
         if (y % (game.getRoadWidth() - 1) == 0)
             down = !down;
     }
-
-	@Override
-	public void onDelete() {
-		// Empty
-	}
 	
 	@Override
 	public String toSerialize() {

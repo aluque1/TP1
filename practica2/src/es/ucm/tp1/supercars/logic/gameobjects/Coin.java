@@ -25,6 +25,17 @@ public class Coin extends GameObject{
 		this.hp--;
 		return false;
 	}
+	
+	@Override
+	public boolean receiveWave() {
+		x++;
+		return true;
+	}
+	
+	@Override
+	public void instaKill() {
+		hp = 0;
+	}
 
 	@Override
 	public void onEnter() {
@@ -35,11 +46,6 @@ public class Coin extends GameObject{
 	public void update() {
 		//Empty as it doesn't move
 		
-	}
-	
-	@Override
-	public boolean receiveShot() {
-		return false;
 	}
 	
 	@Override

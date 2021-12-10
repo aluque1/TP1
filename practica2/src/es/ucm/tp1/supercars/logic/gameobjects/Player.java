@@ -76,11 +76,6 @@ public class Player extends GameObject{
 	public void onDelete() {
 		// empty because never gets deleted.
 	}
-	
-	@Override
-	public boolean receiveWave() {
-		return false;
-	}
 
 	public int getCoinsCollected() {
 		return coinsCollected;

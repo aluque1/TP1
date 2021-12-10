@@ -77,14 +77,6 @@ public class GameObjectContainer {
 		}
 		gameObjects.clear();
 	}
-
-	public void clearLastVisibleColumn() {
-		int col = game.getPlayerX() + game.getVisibility() - 1;
-		for(int i = 0; i < gameObjects.size(); i++)
-			if(gameObjects.get(i).getX() == col)
-				gameObjects.get(i).instaKill();
-		removeDead();
-	}
 	
 	public void removeObjectInPos(int col, int row) {
 		gameObjects.remove(1);

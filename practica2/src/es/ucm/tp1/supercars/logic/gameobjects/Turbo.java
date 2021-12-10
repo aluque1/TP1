@@ -20,6 +20,17 @@ public class Turbo extends GameObject{
 		this.hp--;
 		return true;
 	}
+	
+	@Override
+	public boolean receiveWave() {
+		x++;
+		return true;
+	}
+	
+	@Override
+	public void instaKill() {
+		hp = 0;
+	}
 
 	@Override
 	public void onEnter() {
@@ -31,11 +42,6 @@ public class Turbo extends GameObject{
 	public void update() {
 		// Does not do anything
 		
-	}
-	
-	@Override
-	public boolean receiveShot() {
-		return false;
 	}
 
 	@Override

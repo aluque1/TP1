@@ -22,6 +22,23 @@ public class Obstacle extends GameObject{
 	}
 	
 	@Override
+	public boolean receiveShot() {
+		this.hp--;
+		return true;
+	}
+	
+	@Override
+	public boolean recieveThunder() {
+		this.hp = 0;
+		return true;
+	}	
+	
+	@Override
+	public void instaKill() {
+		hp = 0;
+	}
+	
+	@Override
 	public void onEnter() {
 		numOfObstacles++;
 	}
@@ -41,10 +58,6 @@ public class Obstacle extends GameObject{
 		return numOfObstacles;
 	}
 	
-	@Override
-	public boolean recieveThunder() {
-		this.hp = 0;
-		return true;
-	}
+
 	
 }

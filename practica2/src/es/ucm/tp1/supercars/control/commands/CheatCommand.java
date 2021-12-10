@@ -3,6 +3,7 @@ package es.ucm.tp1.supercars.control.commands;
 import es.ucm.tp1.supercars.control.exceptions.CommandParseException;
 import es.ucm.tp1.supercars.logic.Game;
 import es.ucm.tp1.supercars.logic.GameObjectGenerator;
+import es.ucm.tp1.supercars.logic.Collider;
 
 public class CheatCommand extends Command{
 
@@ -22,12 +23,21 @@ public class CheatCommand extends Command{
 	
 	@Override
 	public boolean execute(Game game) {
-		game.clearLastVisibleColumn();
 		int col = game.getPlayerX() + game.getVisibility() - 1;
+		clearLastVisibleColumn(game, col);
 		GameObjectGenerator.forceAdvanceObject(game, param, col);
 		return true;
 	}
 	
+	private void clearLastVisibleColumn(Game game, int col) {
+		for(int i = 0; i < game.getRoadWidth(); i++) {
+			Collider go = game.getObjectInPosition(col, i);
+			if(go != null)
+				go.instaKill();
+		game.removeDeadObjects();
+	}
+}
+
 	protected boolean matchCommandName(String name) {
 		return NAME.equalsIgnoreCase(name) || name == String.valueOf(name);
 	}

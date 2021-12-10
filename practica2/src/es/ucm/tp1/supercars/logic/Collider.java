@@ -8,8 +8,10 @@ public interface Collider {
 
 	default boolean receiveCollision(Player player) {return false;};
 	
-	boolean receiveWave();
+	default boolean receiveWave() {return false;};
 	
 	default boolean recieveThunder() {return false;};
+	
+	default void instaKill() {};
 	
 }

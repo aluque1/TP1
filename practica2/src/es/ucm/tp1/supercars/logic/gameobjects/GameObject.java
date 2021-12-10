@@ -64,20 +64,4 @@ public abstract class GameObject implements Collider {
 		hp--;
 	}
 
-	protected void instaKill() {
-		hp = 0;
-	}
-	
-	@Override
-	public boolean receiveWave() {
-		x++;
-		return true;
-	}
-	
-	@Override
-	public boolean receiveShot() {
-		this.hp--;
-		return true;
-	}
-
 }

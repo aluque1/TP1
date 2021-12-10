@@ -10,8 +10,10 @@ import es.ucm.tp1.supercars.control.Level;
 import es.ucm.tp1.supercars.logic.gameobjects.GameObject;
 
 /** TODO List
- * GAMEOBJECT: Move the reciveWave and recieveShot to the interface as a default and implement in those classes where needed
- * CONTAINER : Move the last visible column to the CheatCommand
+ * GAMEOBJECT: Move the reciveWave and recieveShot to the interface 
+ * 				as a default and implement in those classes where needed. Done
+ * CONTAINER : Move the last visible column to the CheatCommand. Done
+ * Truck, and Pedestrian inherits from Obstacle. Done
  */
 public class Game{
 
@@ -92,7 +94,7 @@ public class Game{
 			container.update();
 		}
 		
-		container.removeDead();
+		removeDeadObjects();
 		cycle++;
 		distance = getRoadLength() - getPlayerX();
 		if(cycle == 1)
@@ -133,9 +135,10 @@ public class Game{
 		container.addObject(o);
 	}
 	
-	public void clearLastVisibleColumn() {
-		container.clearLastVisibleColumn();
+	public void removeDeadObjects() {
+		container.removeDead();
 	}
+
 	// Player interaction methods -----------------------------------------
 
 	public void moveUp() {

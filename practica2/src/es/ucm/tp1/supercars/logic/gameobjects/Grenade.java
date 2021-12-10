@@ -19,6 +19,17 @@ public class Grenade extends GameObject{
 	public boolean receiveCollision(Player player) {
 		return false;
 	}
+	
+	@Override
+	public boolean receiveWave() {
+		x++;
+		return true;
+	}
+	
+	@Override
+	public void instaKill() {
+		hp = 0;
+	}
 
 	@Override
 	public void onEnter() {
@@ -34,11 +45,6 @@ public class Grenade extends GameObject{
 	@Override
 	public void onDelete() {
 		game.execute(new ExplosionAction(x, y));
-	}
-	
-	@Override
-	public boolean receiveShot() {
-		return false;
 	}
 	
 	@Override

@@ -20,6 +20,18 @@ public class Wall extends Obstacle{
 	}
 	
 	@Override
+	public boolean receiveShot() {
+		this.hp--;
+		return true;
+	}
+	
+	@Override
+	public boolean receiveWave() {
+		x++;
+		return true;
+	}
+	
+	@Override
 	public String toString() {
 		String sprite = null;
 		switch (hp) {
