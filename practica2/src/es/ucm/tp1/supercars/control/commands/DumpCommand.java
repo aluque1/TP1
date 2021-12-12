@@ -1,42 +1,47 @@
 package es.ucm.tp1.supercars.control.commands;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
+import es.ucm.tp1.supercars.control.exceptions.CommandExecuteException;
 import es.ucm.tp1.supercars.control.exceptions.CommandParseException;
 import es.ucm.tp1.supercars.control.exceptions.SaveExecuteException;
 import es.ucm.tp1.supercars.logic.Game;
 
-public class SaveCommand extends Command{
-	private static final String NAME = "save";
+public class DumpCommand extends Command{
 
-	private static final String DETAILS = "[v]: Save <filename>";
+	private static final String NAME = "dump";
 
-	private static final String SHORTCUT = "v";
+	private static final String DETAILS = "[d]ump <filename>";
 
-	private static final String HELP = "Saves the game data in the file specified by the user";
+	private static final String SHORTCUT = "d";
+
+	private static final String HELP = "Shows the conntent of a saved file.";
 
 	private String filename;
-	
-	public SaveCommand() {
+
+	public DumpCommand() {
 		super(NAME, SHORTCUT, DETAILS, HELP);
 	}
-	
+
 	@Override
-	public boolean execute(Game game) throws SaveExecuteException {
-		try (FileWriter file = new FileWriter (filename + ".txt");
-				BufferedWriter writer = new BufferedWriter(file)){
-			writer.write(game.toSerialize());
-			writer.close();
-			System.out.println("Game successfully saved in file " + filename + ".txt");
-			
+	public boolean execute(Game game) throws CommandExecuteException {
+		try (FileReader file = new FileReader (filename + ".txt");
+				BufferedReader reader = new BufferedReader(file)){
+			String l;
+			while ((l = reader.readLine()) != null){
+				System.out.println(l);
+			} 
+			reader.close();
+
 		} catch (IOException e1) {
 			throw new SaveExecuteException(e1.getMessage());
 		}
+		
 		return false;
 	}
-	
+
 	@Override
 	protected Command parse(String[] words) throws CommandParseException{
 		Command command = null;
@@ -44,11 +49,11 @@ public class SaveCommand extends Command{
 			if (words.length != 2) {
 				throw new CommandParseException(String.format("[Error] : Command %s: %s", NAME, INCORRECT_NUMBER_OF_ARGS_MSG));
 			}
-			
+
 			filename = words[1];
 			command = this;
 		}
 		return command;
 	}
-	
+
 }

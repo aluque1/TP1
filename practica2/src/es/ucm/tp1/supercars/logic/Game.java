@@ -121,6 +121,8 @@ public class Game{
 		return placed;
 	}
 	
+	
+	
 	// Game object creation and deletion --------------------------------------------
 	public void clearContainer() {
 		container.clearContainer();
@@ -275,4 +277,6 @@ public class Game{
 	public int getRandomColumn() {
 		return rand.nextInt(this.getVisibility());
 	}
+
+	
 }

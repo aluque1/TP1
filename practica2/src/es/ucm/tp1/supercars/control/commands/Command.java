@@ -24,7 +24,9 @@ public abstract class Command {
 		new WaveCommand(),
 		new ClearCommand(), 
 		new CheatCommand(),
-		new SerializeCommand()
+		new SerializeCommand(),
+		new SaveCommand(),
+		new DumpCommand()
 		
 	};
 	/* @formatter:on */
