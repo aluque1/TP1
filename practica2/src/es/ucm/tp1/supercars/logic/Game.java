@@ -9,6 +9,8 @@ import java.util.Random;
 
 import es.ucm.tp1.supercars.control.Level;
 import es.ucm.tp1.supercars.control.exceptions.InputOutputRecordException;
+import es.ucm.tp1.supercars.control.exceptions.InvalidPositionException;
+import es.ucm.tp1.supercars.control.exceptions.NotEnoughCoinsException;
 import es.ucm.tp1.supercars.logic.gameobjects.GameObject;
 
 /** TODO List
@@ -121,16 +123,22 @@ public class Game{
 		printer.init();
 	}
 
-	public void spendCoins(int price) {
-		player.spendCoins(price);
+	public boolean buy(int cost) throws NotEnoughCoinsException {
+		boolean bought = false;
+		if(player.spendCoins(cost))
+			bought = true;
+		else
+			throw new NotEnoughCoinsException();
+		return bought;
 	}
 	
-	public boolean placeGrenade(int x, int y) {
-		boolean placed = true;
-		if(container.isPosEmpty(x, y))
+	public boolean placeGrenade(int x, int y) throws InvalidPositionException {
+		boolean placed = false;
+		if(container.isPosEmpty(x, y) && isWithinVisibility(x, y)) {
 			GameObjectGenerator.placeGrenade(this, x + getPlayerX(), y);
-		else
-			placed = false;
+			placed = true;
+		} else
+			throw new InvalidPositionException();
 		return placed;
 	}
 	

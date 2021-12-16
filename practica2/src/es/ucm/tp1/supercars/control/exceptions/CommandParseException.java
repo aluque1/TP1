@@ -7,4 +7,8 @@ public class CommandParseException extends GameException{
 	public CommandParseException(String format) {
 		super(format);
 	}
+	
+	public CommandParseException(String format, Throwable cause) {
+		super(format, cause);
+	}
 }

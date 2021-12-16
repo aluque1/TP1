@@ -7,4 +7,8 @@ public class CommandExecuteException extends GameException{
 		super(format);
 	}
 
+	public CommandExecuteException(String format, Throwable cause) {
+		super(format, cause);
+	}
+
 }

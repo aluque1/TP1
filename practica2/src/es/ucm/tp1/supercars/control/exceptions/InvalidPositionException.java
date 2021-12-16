@@ -4,7 +4,7 @@ public class InvalidPositionException extends CommandExecuteException{
 
 	private static final long serialVersionUID = 1L;
 
-	public InvalidPositionException(String format) {
-		super(format);
+	public InvalidPositionException() {
+		super("Position is not valid");
 	}
 }

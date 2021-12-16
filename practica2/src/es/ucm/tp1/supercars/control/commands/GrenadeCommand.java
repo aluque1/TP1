@@ -1,6 +1,7 @@
 package es.ucm.tp1.supercars.control.commands;
 
 import es.ucm.tp1.supercars.control.Buyable;
+import es.ucm.tp1.supercars.control.exceptions.CommandExecuteException;
 import es.ucm.tp1.supercars.control.exceptions.CommandParseException;
 import es.ucm.tp1.supercars.control.exceptions.InvalidPositionException;
 import es.ucm.tp1.supercars.control.exceptions.NotEnoughCoinsException;
@@ -30,14 +31,16 @@ public class GrenadeCommand extends Command implements Buyable{
 	}
 	
 	@Override
-	public boolean execute(Game game) throws NotEnoughCoinsException, InvalidPositionException {
+	public boolean execute(Game game) throws CommandExecuteException {
 		boolean executed = false;
-		if (game.isWithinVisibility(x, y) && buy(game) && game.placeGrenade(x, y)) {
-				game.update(doesInstantMovement());
-				executed = true;
-			}
-		else {
-			throw new InvalidPositionException(String.format("[Error] : Command %s: %s %s %s %s", NAME, FAILED_MSG, x, y, "is not a valid position."));
+		try {
+			buy(game);
+			game.placeGrenade(x, y);
+			executed = true;
+		} catch (NotEnoughCoinsException e) {
+			throw new CommandExecuteException(String.format("[ERROR]: %s", FAILED_MSG), e);
+		} catch (InvalidPositionException e1) {
+			throw new CommandExecuteException(String.format("[ERROR]: %s", FAILED_MSG), e1);
 		}
 		return executed;
 	}

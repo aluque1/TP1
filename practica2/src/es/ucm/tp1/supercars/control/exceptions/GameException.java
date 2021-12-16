@@ -10,4 +10,8 @@ public class GameException extends Exception{
 	public GameException(String message) {
 		super(message);
 	}
+
+	public GameException(String format, Throwable cause) {
+		super(format, cause);
+	}
 }

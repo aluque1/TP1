@@ -26,7 +26,7 @@ public class DumpCommand extends Command{
 	}
 
 	@Override
-	public boolean execute(Game game) throws CommandExecuteException {
+	public boolean execute(Game game) throws SaveExecuteException{
 		try (FileReader file = new FileReader (filename + ".txt");
 				BufferedReader reader = new BufferedReader(file)){
 			String l;
