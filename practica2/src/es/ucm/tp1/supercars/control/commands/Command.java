@@ -26,7 +26,8 @@ public abstract class Command {
 		new CheatCommand(),
 		new SerializeCommand(),
 		new SaveCommand(),
-		new DumpCommand()
+		new DumpCommand(),
+		new ShowRecordCommand()
 		
 	};
 	/* @formatter:on */

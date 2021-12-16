@@ -6,7 +6,9 @@ import es.ucm.tp1.supercars.logic.instantAction.InstantAction;
 import es.ucm.tp1.supercars.view.GamePrinter;
 
 import java.util.Random;
+
 import es.ucm.tp1.supercars.control.Level;
+import es.ucm.tp1.supercars.control.exceptions.InputOutputRecordException;
 import es.ucm.tp1.supercars.logic.gameobjects.GameObject;
 
 /** TODO List
@@ -17,6 +19,7 @@ public class Game{
 	private static final String FINISH_LINE = "¦";
 	
 	Player player;
+	Record record;
 	GameObjectContainer container;
 	Level level;
 	boolean test;
@@ -40,8 +43,13 @@ public class Game{
 	public void init(Long seed, Level level) {
 		this.seed = seed;
 		this.level = level;
+		if(level.name().equalsIgnoreCase("test"))
+			test = true;
+		else 
+			test = false;
 		rand = new Random(this.seed);
 		container = new GameObjectContainer(this);
+		record = new Record(this);
 		GameObjectGenerator.reset();
 		GameObjectGenerator.generateGameObjects(this, level);
 		player = new Player(this, 0, getRoadWidth()/2);
@@ -80,6 +88,7 @@ public class Game{
 	// Command calling methods -----------------------------------------------------------------
 	
 	public void update(boolean hasMovedSideways) {
+		
 		GameObjectGenerator.generateRuntimeObjects(this);
 		
 		if(!hasMovedSideways)
@@ -121,6 +130,23 @@ public class Game{
 		return placed;
 	}
 	
+	// Record checking methods -----------------------------------------------------
+	public void updateRecord() throws InputOutputRecordException {
+		record.updateRecord(this);
+		
+	}
+	
+	public boolean isNewRecord() {
+		if(elapsedTime < record.getRecord(this)) {
+			record.changeRecord(this);
+			newRecord = true;
+		}
+		return newRecord;
+	}
+
+	public long getRecord() {
+		return record.getRecord(this);
+	}
 	
 	
 	// Game object creation and deletion --------------------------------------------
@@ -232,14 +258,6 @@ public class Game{
 
 	public boolean hasArrived() {
 		return distance <= 0;
-	}
-
-	public boolean isNewRecord() {
-		return newRecord;
-	}
-
-	public long getRecord() {
-		return elapsedTime;
 	}
 
 	public Collider getObjectInPosition(int x, int y) {
