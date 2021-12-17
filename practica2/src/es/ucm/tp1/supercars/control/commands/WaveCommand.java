@@ -2,6 +2,7 @@ package es.ucm.tp1.supercars.control.commands;
 
 import es.ucm.tp1.supercars.control.Buyable;
 import es.ucm.tp1.supercars.control.exceptions.CommandExecuteException;
+import es.ucm.tp1.supercars.control.exceptions.NotEnoughCoinsException;
 import es.ucm.tp1.supercars.logic.Game;
 import es.ucm.tp1.supercars.logic.instantAction.WaveAction;
 
@@ -17,6 +18,8 @@ public class WaveCommand extends Command implements Buyable{
 
 	private static final String HELP = "Moves all the visible objects on the road back by one cell for 5 coins.";
 
+	private static final String FAILED_MSG = "Wave could not be bought. Not enough coins";
+	
 	public WaveCommand() {
 		super(NAME, SHORTCUT, DETAILS, HELP);
 	}
@@ -24,9 +27,13 @@ public class WaveCommand extends Command implements Buyable{
 	@Override
 	public boolean execute(Game game) throws CommandExecuteException {
 		boolean executed = false;
-		if(buy(game)) {
-			game.execute(new WaveAction());
+		try {
+			buy(game);
+			// No se porque no funciona
+			game.execute(new WaveAction()); 
 			executed = true;
+		} catch (NotEnoughCoinsException e) {
+			throw new CommandExecuteException(String.format("[ERROR]: %s", FAILED_MSG), e);
 		}
 		return executed;
 	}

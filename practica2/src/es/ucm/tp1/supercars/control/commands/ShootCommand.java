@@ -2,6 +2,7 @@ package es.ucm.tp1.supercars.control.commands;
 
 import es.ucm.tp1.supercars.control.Buyable;
 import es.ucm.tp1.supercars.control.exceptions.CommandExecuteException;
+import es.ucm.tp1.supercars.control.exceptions.NotEnoughCoinsException;
 import es.ucm.tp1.supercars.logic.Game;
 import es.ucm.tp1.supercars.logic.instantAction.ShotAction;
 
@@ -17,6 +18,8 @@ public class ShootCommand extends Command implements Buyable{
 
 	private static final String HELP = "shoot bullet";
 
+	private static final String FAILED_MSG = "could not shoot, not enough coins";
+	
 	public ShootCommand() {
 		super(NAME, SHORTCUT, DETAILS, HELP);
 	}
@@ -24,11 +27,13 @@ public class ShootCommand extends Command implements Buyable{
 	@Override
 	public boolean execute(Game game) throws CommandExecuteException {
 		boolean executed = false;
-		
-		if(buy(game)) {
+		try {
+			buy(game);
 			game.execute(new ShotAction());
-			game.update(doesInstantMovement());
 			executed = true;
+			game.update(doesInstantMovement());
+		} catch (NotEnoughCoinsException e) {
+			throw new CommandExecuteException(String.format("[ERROR]: %s", FAILED_MSG), e);
 		}
 		return executed;
 	}

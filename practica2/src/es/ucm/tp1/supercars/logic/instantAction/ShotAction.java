@@ -10,7 +10,7 @@ public class ShotAction implements InstantAction{
 		boolean hit = false;
 		int i = game.getPlayerX() + 1;
 		int y = game.getPlayerY();
-		while(y < game.getVisibility() - 1 && !hit) {
+		while(y < (game.getVisibility() +  game.getPlayerX() - 1) && !hit) {
 			Collider go = game.getObjectInPosition(i, y);
 			if(go != null) {
 				if(go.receiveShot())

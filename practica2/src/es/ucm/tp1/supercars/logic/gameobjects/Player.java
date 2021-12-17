@@ -31,7 +31,7 @@ public class Player extends GameObject{
 	
 	public boolean spendCoins(int cost) {
 		boolean bought = false;
-		if(coinsCollected > cost) {
+		if(coinsCollected >= cost) {
 			bought = true;
 			coinsCollected -= cost;
 		}
