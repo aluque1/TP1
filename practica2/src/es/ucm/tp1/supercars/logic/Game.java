@@ -15,9 +15,6 @@ import es.ucm.tp1.supercars.logic.gameobjects.GameObject;
 
 /** TODO List
  * 
- * En todos los comandos lanzamos un try catch(); 
- * Hacer todos los throws desde el game. (Como is fuera un execute)
- * throw en los try catch salvo el def controller
  */
 public class Game{
 

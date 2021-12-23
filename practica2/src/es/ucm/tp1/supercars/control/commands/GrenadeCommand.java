@@ -37,9 +37,10 @@ public class GrenadeCommand extends Command implements Buyable{
 			buy(game);
 			game.placeGrenade(x, y);
 			executed = true;
-		} catch (NotEnoughCoinsException e) {
+		} catch (InvalidPositionException e) {
+			game.givePlayerCoins(GRENADE_PRICE); // If it has enough coins but your cant place then it still takes them away, so we can just add them back
 			throw new CommandExecuteException(String.format("[ERROR]: %s", FAILED_MSG), e);
-		} catch (InvalidPositionException e1) {
+		} catch (NotEnoughCoinsException e1) {
 			throw new CommandExecuteException(String.format("[ERROR]: %s", FAILED_MSG), e1);
 		}
 		return executed;
